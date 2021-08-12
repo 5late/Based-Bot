@@ -82,6 +82,9 @@ async def on_message(message):
                 json_object = json.load(f)
                 f.close()
 
+                if json_object['data']['last_based_at'] + 3 >= getTicks():
+                    print(json_object['data']['last_based_at'] + 3, getTicks())
+                    return
                 json_object['data']['based_count'] += 1
                 json_object['data']['last_based_at'] = getTicks()
 
@@ -116,6 +119,9 @@ async def on_message(message):
                 json_object = json.load(f)
                 f.close()
 
+                if json_object['data']['last_cringed_at'] + 3 >= getTicks():
+                    print(json_object['data']['last_cringed_at'] + 3, getTicks())
+                    return
                 json_object['data']['cringe_count'] += 1
                 json_object['data']['last_cringed_at'] = getTicks()
 
@@ -124,8 +130,7 @@ async def on_message(message):
                 f.close()
 
             print(member.id)
-
-        print(message.mentions[0].id)
+            
     await bot.process_commands(message)
 
 
