@@ -93,6 +93,8 @@ async def on_message(message):
                 f.close()
 
             print(member.id)
+        
+        await message.add_reaction('👍')
 
     elif message.content.split()[0].lower() == 'cringe' and message.mentions:
         # cringe stuff goes here
@@ -130,7 +132,7 @@ async def on_message(message):
                 f.close()
 
             print(member.id)
-            
+
     await bot.process_commands(message)
 
 
@@ -245,5 +247,27 @@ async def mybasedcount(ctx):
         embed.set_thumbnail(url='attachment://thumbnail.png')
 
         await ctx.send(embed = embed, file=thumbnail)
+
+@bot.command()
+async def ask(ctx, *, question):
+    with open('./questionlog.txt', 'a') as f:
+        f.write(f'<@{ctx.author.id}> asked: {question}\n')
+        f.close()
+    await ctx.send('Added your question! Your question may be answered the next time my creator opens Q/A time. You will be pinged when your question is asked.')
+
+@bot.command()
+async def qa(ctx):
+    if not ctx.author.id == 564466359107321856:
+        return
+    f = open('./questionlog.txt', 'r')
+    lines = f.readlines()
+
+    for line in lines:
+        await ctx.send(line)
+        await asyncio.sleep(1)
+
+    open('./questionlog.txt', 'w')
+    await ctx.send('End of questions.')
+    
 
 bot.run(DISCORD_TOKEN)
