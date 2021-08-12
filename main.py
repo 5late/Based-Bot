@@ -67,12 +67,18 @@ async def on_message(message):
                         "discord_id": member.id,
                         "created_at": getTicks(),
                         "data": {
-                            "based_count": 1,
-                            "based_title": "newb",
-                            "last_based_at": getTicks(),
-                            "cringe_count": 0,
-                            "cringe_title": "newb",
-                            "last_cringed_at": getTicks()
+                            "based": {
+                                "based_count": 1,
+                                "based_title": "newb",
+                                "last_based_at": getTicks(),
+                                "last_based_by": message.author.id,
+                            },
+                            "cringe": {
+                                "cringe_count": 0,
+                                "cringe_title": "newb",
+                                "last_cringed_at": getTicks(),
+                                "last_cringed_by": message.author.id
+                            }
                         }
                     }
                     json.dump(data, f, indent=4)
@@ -82,11 +88,11 @@ async def on_message(message):
                 json_object = json.load(f)
                 f.close()
 
-                if json_object['data']['last_based_at'] + 3 >= getTicks():
-                    print(json_object['data']['last_based_at'] + 3, getTicks())
+                if json_object['data']['based']['last_based_at'] + 3 >= getTicks():
+                    print(json_object['data']['based']['last_based_at'] + 3, getTicks())
                     return
-                json_object['data']['based_count'] += 1
-                json_object['data']['last_based_at'] = getTicks()
+                json_object['data']['based']['based_count'] += 1
+                json_object['data']['based']['last_based_at'] = getTicks()
 
                 f = open(f'./data/{member.id}.json', 'w')
                 json.dump(json_object, f, indent=4)
@@ -106,12 +112,18 @@ async def on_message(message):
                         "discord_id": member.id,
                         "created_at": getTicks(),
                         "data": {
-                            "based_count": 0,
-                            "based_title": "newb",
-                            "last_based_at": getTicks(),
-                            "cringe_count": 1,
-                            "cringe_title": "newb",
-                            "last_cringed_at": getTicks()
+                            "based": {
+                                "based_count": 0,
+                                "based_title": "newb",
+                                "last_based_at": getTicks(),
+                                "last_based_by": message.author.id,
+                            },
+                            "cringe": {
+                                "cringe_count": 1,
+                                "cringe_title": "newb",
+                                "last_cringed_at": getTicks(),
+                                "last_cringed_by": message.author.id
+                            }
                         }
                     }
                     json.dump(data, f, indent=4)
@@ -121,11 +133,13 @@ async def on_message(message):
                 json_object = json.load(f)
                 f.close()
 
-                if json_object['data']['last_cringed_at'] + 3 >= getTicks():
-                    print(json_object['data']['last_cringed_at'] + 3, getTicks())
+                if json_object['data']['cringe']['last_cringed_at'] + 3 >= getTicks():
+                    print(json_object['data']['cringe']['last_cringed_at'] + 3, getTicks())
                     return
-                json_object['data']['cringe_count'] += 1
-                json_object['data']['last_cringed_at'] = getTicks()
+                elif json_object['data']['cringe']['last_cringed_at'] + 90 >= getTicks() and json_object['data']['last_cringed_by'] == message.author.id:
+                    return
+                json_object['data']['cringe']['cringe_count'] += 1
+                json_object['data']['cringe']['last_cringed_at'] = getTicks()
 
                 f = open(f'./data/{member.id}.json', 'w')
                 json.dump(json_object, f, indent=4)
@@ -216,12 +230,12 @@ async def mybasedcount(ctx):
         json_object = json.load(f)
         f.close()
 
-        based_count = json_object['data']['based_count']
-        based_title = json_object['data']['based_title']
-        last_based_at = json_object['data']['last_based_at']
-        cringe_count = json_object['data']['cringe_count']
-        cringe_title = json_object['data']['cringe_title']
-        last_cringed_at = json_object['data']['last_cringed_at']
+        based_count = json_object['data']['based']['based_count']
+        based_title = json_object['data']['based']['based_title']
+        last_based_at = json_object['data']['based']['last_based_at']
+        cringe_count = json_object['data']['cringe']['cringe_count']
+        cringe_title = json_object['data']['cringe']['cringe_title']
+        last_cringed_at = json_object['data']['cringe']['last_cringed_at']
         
         if based_count > cringe_count:
             thumbnail = discord.File('./imgs/based.png', 'thumbnail.png')
