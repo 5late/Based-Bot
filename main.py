@@ -41,9 +41,6 @@ def checkFileExists(file):
     return os.path.isfile(file)
 
 def getTicks():
-    #d = datetime.utcnow()
-    #t0 = datetime(1, 1, 1)
-    #return (d - t0).total_seconds()
     return int(time.time())
 
 @bot.event
