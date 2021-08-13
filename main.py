@@ -143,6 +143,8 @@ async def on_message(message):
                 f.close()
 
             print(member.id)
+        
+        await message.add_reaction('👍')
 
     await bot.process_commands(message)
 
