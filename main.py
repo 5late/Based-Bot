@@ -94,6 +94,7 @@ async def on_message(message):
                     return
                 json_object['data']['based']['based_count'] += 1
                 json_object['data']['based']['last_based_at'] = getTicks()
+                json_object['data']['based']['last_based_by'] = message.author.id
 
                 f = open(f'./data/{member.id}.json', 'w')
                 json.dump(json_object, f, indent=4)
@@ -143,6 +144,7 @@ async def on_message(message):
                     return
                 json_object['data']['cringe']['cringe_count'] += 1
                 json_object['data']['cringe']['last_cringed_at'] = getTicks()
+                json_object['data']['cringe']['last_cringed_by'] = message.author.id
 
                 f = open(f'./data/{member.id}.json', 'w')
                 json.dump(json_object, f, indent=4)
@@ -163,6 +165,30 @@ async def whoami(ctx):
     embed.add_field(name='Creator', value='My creator is ``Xurxx#7879``')
     await ctx.send(embed=embed)
 
+
+@bot.command()
+async def reset(ctx, boc, person):
+    if not ctx.author.id == 564466359107321856:
+        return
+    if not checkFileExists(f'./data/{person}.json'):
+        return await ctx.send('File not found')
+    elif checkFileExists(f'./data/{person}.json'):
+        f = open(f'./data/{person}.json', 'r')
+        json_object = json.load(f)
+        f.close()
+
+        if boc.lower() == 'based':
+            json_object['data'][boc][f'based_count'] = 0
+            json_object['data'][boc][f'based_title'] = 'newb'
+        elif boc.lower() == 'cringe':
+            json_object['data'][boc][f'cringe_count'] = 0
+            json_object['data'][boc][f'cringe_title'] = 'newb'
+
+        f = open(f'./data/{person}.json', 'w')
+        json.dump(json_object, f, indent=4)
+        f.close()
+        return await ctx.send(f'Reset <@{person}> {boc} score to 0.')
+        
 
 @bot.command()
 async def blacklist(ctx, type, arg):
