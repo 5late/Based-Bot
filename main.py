@@ -20,7 +20,7 @@ CRINGE = ['Cringe', 'cringe', 'soy', 'Soy']
 
 bot = commands.Bot(
     command_prefix='./',
-    description='A VALORANT bot that breaks down stats.',
+    description='Based Bot, the most based bot on Discord.',
     intents=intents)
 
 def readFile(fileName):
@@ -157,13 +157,15 @@ async def on_message(message):
 @bot.command()
 async def whoami(ctx):
     embed = discord.Embed(title = 'Based Bot', description = '**The most based bot on Discord.**', color = 0xFFCC)
-    embed.add_field(name='Command Help', value= 'For command help, run command ``./commands``')
+    embed.add_field(name='Command Help', value= 'For command help, [Click Here](https://5late.github.io/guides/HIDDEN-BASED-BOT.html#commands)')
     embed.add_field(name='Creator', value='My creator is ``Xurxx#7879``')
     await ctx.send(embed=embed)
 
 
 @bot.command()
 async def blacklist(ctx, type, arg):
+    if not ctx.author.id == 564466359107321856:
+        return
     def readFile(fileName):
         fileObj = open(fileName, "r")  # opens the file in read mode
         words = fileObj.read().splitlines()  # puts the file into an array
