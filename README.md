@@ -6,4 +6,9 @@ Based Bot, the most based bot on Discord.
 
 [Click Here](https://slatedev.xyz/basedbot)
 
-~ 5late
+
+## License
+
+Licensed under GNU GPL 2.0. See the [LICENSE](./LICENSE) file for more information.
+
+- ~ 5late
