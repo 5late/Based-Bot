@@ -90,7 +90,7 @@ async def on_message(message):
                 if json_object['data']['based']['last_based_at'] + 3 >= getTicks():
                     print(json_object['data']['based']['last_based_at'] + 3, getTicks())
                     return
-                elif json_object['data']['based']['last_based_at'] + 180 >= getTicks() and json_object['data']['based']['last_based_by'] == message.author.id:
+                elif json_object['data']['based']['last_based_at'] + 100 >= getTicks() and json_object['data']['based']['last_based_by'] == message.author.id:
                     return
                 json_object['data']['based']['based_count'] += 1
                 json_object['data']['based']['last_based_at'] = getTicks()
@@ -139,7 +139,7 @@ async def on_message(message):
                 if json_object['data']['cringe']['last_cringed_at'] + 3 >= getTicks():
                     print(json_object['data']['cringe']['last_cringed_at'] + 3, getTicks())
                     return
-                elif json_object['data']['cringe']['last_cringed_at'] + 180 >= getTicks() and json_object['data']['cringe']['last_cringed_by'] == message.author.id:
+                elif json_object['data']['cringe']['last_cringed_at'] + 120 >= getTicks() and json_object['data']['cringe']['last_cringed_by'] == message.author.id:
                     return
                 json_object['data']['cringe']['cringe_count'] += 1
                 json_object['data']['cringe']['last_cringed_at'] = getTicks()
