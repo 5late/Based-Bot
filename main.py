@@ -81,6 +81,8 @@ async def on_message(message):
                     json.dump(data, f, indent=4)
             
             elif checkFileExists(f'./data/{member.id}.json'):
+                if member.id == message.author.id:
+                    return
                 f = open(f'./data/{member.id}.json', 'r')
                 json_object = json.load(f)
                 f.close()
@@ -126,6 +128,8 @@ async def on_message(message):
                     json.dump(data, f, indent=4)
             
             elif checkFileExists(f'./data/{member.id}.json'):
+                if member.id == message.author.id:
+                    return
                 f = open(f'./data/{member.id}.json', 'r')
                 json_object = json.load(f)
                 f.close()
