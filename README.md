@@ -2,6 +2,8 @@
 
 Based Bot, the most based bot on Discord.
 
-# Documentation
+## Documentation
 
 [Click Here](https://slatedev.xyz/basedbot)
+
+~ 5late
