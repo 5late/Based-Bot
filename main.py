@@ -317,4 +317,42 @@ async def qa(ctx):
     await ctx.send('End of questions.')
     
 
+@bot.command()
+async def update(ctx):
+    if not ctx.author.id == 564466359107321856:
+        return
+
+    def write_json(new_data, filename):
+        with open(filename, 'r+') as file:
+            file_data = json.load(file)
+            file_data.update(new_data)
+            file.seek(0)
+            
+            json.dump(file_data, file, indent=4)
+
+    path = './data/'
+    files = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+    file_count = 0
+
+    for file in files:
+        f = open(f'./data/{file}', 'r')
+        json_object = json.load(f)
+
+        if "settings" in json_object:
+            continue
+        elif not "settings" in json_object:
+            file_count += 1
+            settings = {
+                "settings": {
+                    "public_profile": True,
+                    "show_badges": True
+                }
+            }
+            write_json(settings, f'./data/{file}')
+
+    await ctx.send(f'Updated {file_count} files with new data.')
+
+    
+    
+
 bot.run(DISCORD_TOKEN)

@@ -1,5 +1,6 @@
 .env
 data/
+data_backup/
 blacklisted/
 questionlog.txt
 mainpyoutput.txt
