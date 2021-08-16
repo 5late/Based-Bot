@@ -347,7 +347,6 @@ async def update(ctx):
                 }
             }
             write_json(settings, f'./data/{file}')
-            continue
 
         elif not "badges" in json_object:
             file_count += 1
