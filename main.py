@@ -263,6 +263,18 @@ async def mybasedcount(ctx):
         json_object = json.load(f)
         f.close()
 
+        badges = ''
+
+        if json_object['badges']['owner'] == True:
+            badges += '<:owner:876856567880896602>'
+        if json_object['badges']['early_adopter'] == True:
+            badges += '<:early_adopter:876856567536947281>'
+        if json_object['badges']['alpha_tester'] == True:
+            badges += '<:alpha_tester:876856567717331004>'
+        if json_object['badges']['developer'] == True:
+            badges += '<:developer:876856568996560937>'
+        if json_object['badges']['donator'] == True:
+            badges += '<:donator:876856567859929188>'
         based_count = json_object['data']['based']['based_count']
         based_title = json_object['data']['based']['based_title']
         last_based_at = json_object['data']['based']['last_based_at']
@@ -285,6 +297,7 @@ async def mybasedcount(ctx):
 
         
         embed = discord.Embed(title=f'Based Count for {ctx.author.name}', description = 'Based and Based-Bot pilled.', color=color)
+        embed.add_field(name='Badges', value=badges, inline=False)
         embed.add_field(name='Based Count', value=based_count)
         embed.add_field(name='Based Title', value=based_title)
         embed.add_field(name='Last Based Count', value=f'{last_based_at} **UTC**')
