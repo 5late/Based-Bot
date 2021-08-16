@@ -327,11 +327,54 @@ async def basedcount(ctx, person:discord.Member=''):
     if not checkFileExists(f'./data/{person.id}.json'):
         return await ctx.send('Nothing to show. What a boring person.')
     elif checkFileExists(f'./data/{person.id}.json'):
-        f = open(f'./data/{ctx.author.id}.json', 'r')
+        f = open(f'./data/{person.id}.json', 'r')
         json_object = json.load(f)
         f.close()
 
-        await ctx.send(f'```{json_object}```')
+        badges = ''
+
+        if json_object['badges']['owner'] == True:
+            badges += '<:owner:876856567880896602>'
+        if json_object['badges']['early_adopter'] == True:
+            badges += '<:early_adopter:876856567536947281>'
+        if json_object['badges']['alpha_tester'] == True:
+            badges += '<:alpha_tester:876856567717331004>'
+        if json_object['badges']['developer'] == True:
+            badges += '<:developer:876856568996560937>'
+        if json_object['badges']['donator'] == True:
+            badges += '<:donator:876856567859929188>'
+        based_count = json_object['data']['based']['based_count']
+        based_title = json_object['data']['based']['based_title']
+        last_based_at = json_object['data']['based']['last_based_at']
+        cringe_count = json_object['data']['cringe']['cringe_count']
+        cringe_title = json_object['data']['cringe']['cringe_title']
+        last_cringed_at = json_object['data']['cringe']['last_cringed_at']
+        
+        if based_count > cringe_count:
+            thumbnail = discord.File('./imgs/based.png', 'thumbnail.png')
+            color = 0x42f551
+        elif based_count == cringe_count:
+            thumbnail = discord.File('./imgs/normie.png', 'thumbnail.png')
+            color = 0x8e998f
+        elif based_count < cringe_count:
+            thumbnail = discord.File('./imgs/cringe.png', 'thumbnail.png')
+            color = 0xad1313
+
+        last_based_at = datetime.utcfromtimestamp(last_based_at).strftime("%a %b %d %Y | %H:%M")
+        last_cringed_at = datetime.utcfromtimestamp(last_cringed_at).strftime("%a %b %d %Y | %H:%M")
+
+        
+        embed = discord.Embed(title=f'Based Count for {person.name}', description = 'Based and Based-Bot pilled.', color=color)
+        embed.add_field(name='Badges', value=badges, inline=False)
+        embed.add_field(name='Based Count', value=based_count)
+        embed.add_field(name='Based Title', value=based_title)
+        embed.add_field(name='Last Based Count', value=f'{last_based_at} **UTC**')
+        embed.add_field(name='Cringe Count', value=cringe_count)
+        embed.add_field(name='Cringe Title', value=cringe_title)
+        embed.add_field(name='Last Cringed Count', value=f'{last_cringed_at} **UTC**')
+        embed.set_thumbnail(url='attachment://thumbnail.png')
+
+        await ctx.send(embed = embed, file=thumbnail)
     
 
 @bot.command()
