@@ -338,9 +338,7 @@ async def update(ctx):
         f = open(f'./data/{file}', 'r')
         json_object = json.load(f)
 
-        if "settings" in json_object:
-            continue
-        elif not "settings" in json_object:
+        if not "settings" in json_object:
             file_count += 1
             settings = {
                 "settings": {
@@ -349,6 +347,20 @@ async def update(ctx):
                 }
             }
             write_json(settings, f'./data/{file}')
+            continue
+
+        elif not "badges" in json_object:
+            file_count += 1
+            badges = {
+                "badges": {
+                    "alpha_tester": False,
+                    "early_adopter": True,
+                    "developer": False,
+                    "owner": False,
+                    "donator": False
+                }
+            }
+            write_json(badges, f'./data/{file}')
 
     await ctx.send(f'Updated {file_count} files with new data.')
 
