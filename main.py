@@ -1,3 +1,4 @@
+from re import T
 import discord
 from datetime import datetime, timezone
 from discord.ext.commands.core import check
@@ -111,20 +112,33 @@ async def on_message(message):
             if not checkFileExists(f'./data/{member.id}.json'):
                 with open(f'./data/{member.id}.json', 'w') as f:
                     data = {
-                        "discord_id": member.id,
-                        "created_at": getTicks(),
-                        "data": {
-                            "based": {
-                                "based_count": 0,
-                                "based_title": "newb",
-                                "last_based_at": getTicks(),
-                                "last_based_by": message.author.id,
+                        {
+                            "discord_id": member.id,
+                            "created_at": getTicks(),
+                            "data": {
+                                "based": {
+                                    "based_count": 0,
+                                    "based_title": "newb",
+                                    "last_based_at": getTicks(),
+                                    "last_based_by": message.author.id
+                                },
+                                "cringe": {
+                                    "cringe_count": 1,
+                                    "cringe_title": "newb",
+                                    "last_cringed_at": getTicks(),
+                                    "last_cringed_by": message.author.id
+                                }
                             },
-                            "cringe": {
-                                "cringe_count": 1,
-                                "cringe_title": "newb",
-                                "last_cringed_at": getTicks(),
-                                "last_cringed_by": message.author.id
+                            "settings": {
+                                "public_profile": True,
+                                "show_badges": True
+                            },
+                            "badges": {
+                                "alpha_tester": False,
+                                "early_adopter": True,
+                                "developer": False,
+                                "owner": False,
+                                "donator": False
                             }
                         }
                     }
@@ -307,6 +321,18 @@ async def mybasedcount(ctx):
         embed.set_thumbnail(url='attachment://thumbnail.png')
 
         await ctx.send(embed = embed, file=thumbnail)
+
+@bot.command()
+async def basedcount(ctx, person:discord.Member=''):
+    if not checkFileExists(f'./data/{person.id}.json'):
+        return await ctx.send('Nothing to show. What a boring person.')
+    elif checkFileExists(f'./data/{person.id}.json'):
+        f = open(f'./data/{ctx.author.id}.json', 'r')
+        json_object = json.load(f)
+        f.close()
+
+        await ctx.send(f'```{json_object}```')
+    
 
 @bot.command()
 async def ask(ctx, *, question):
