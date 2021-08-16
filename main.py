@@ -63,6 +63,7 @@ async def on_message(message):
                 with open(f'./data/{member.id}.json', 'w') as f:
                     data = {
                         "discord_id": member.id,
+                        "server_id": message.guild.id,
                         "created_at": getTicks(),
                         "data": {
                             "based": {
@@ -331,6 +332,9 @@ async def basedcount(ctx, person:discord.Member=''):
         json_object = json.load(f)
         f.close()
 
+        if json_object['settings']['public_profile'] == False and not ctx.author.id == 564466359107321856:
+            return await ctx.send('This profile is private!')
+
         badges = ''
 
         if json_object['badges']['owner'] == True:
@@ -442,6 +446,13 @@ async def update(ctx):
                 }
             }
             write_json(badges, f'./data/{file}')
+        
+        elif not "server_id" in json_object:
+            file_count += 1
+            server_id = {
+                "server_id": ctx.message.guild.id
+            }
+            write_json(server_id, f'./data/{file}')
 
     await ctx.send(f'Updated {file_count} files with new data.')
 
