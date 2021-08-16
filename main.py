@@ -353,6 +353,54 @@ async def update(ctx):
     await ctx.send(f'Updated {file_count} files with new data.')
 
     
-    
+@bot.command()
+async def settings(ctx, arg='', value=''):
+    if not checkFileExists(f'./data/{ctx.author.id}.json'):
+        return await ctx.send('Nothing to show. What a boring person.')
+    elif checkFileExists(f'./data/{ctx.author.id}.json'):
+        f = open(f'./data/{ctx.author.id}.json', 'r')
+        json_object = json.load(f)
+        f.close()
+        
+        falses = ['false', 'no', 'private', 'priv']
+        trues = ['true', 'yes', 'public', 'pub']
+
+        if not arg:
+            embed = discord.Embed(title=f'Settings for {ctx.author.name}', description='To change a setting use ``./settings SETTING NEWVALUE``.', color=0x00ccff)
+            embed.add_field(name='Public Profile', value=json_object['settings']['public_profile'])
+            embed.add_field(name='Show Badges on Profile', value=json_object['settings']['show_badges'])
+            embed.set_footer(text='Accepted SETTINGS are {public}, {badges}.')
+
+            await ctx.send(embed=embed)
+        
+        elif arg == 'public':
+            if value.lower() in falses:
+                json_object['settings']['public_profile'] = False
+            elif value.lower() in trues:
+                json_object['settings']['public_profile'] = True
+            else:
+                return await ctx.send(f'Thats not an accepted NEWVALUE. Accepted NEWVALUES are: ``{trues}`` and ``{falses}``.')
+            f = open(f'./data/{ctx.author.id}.json', 'w')
+            json.dump(json_object, f, indent=4)
+            f.close()
+
+            return await ctx.send(f'Successfully set ``{arg}`` to ``{value}``.')
+        
+        elif arg == 'badges':
+            if value.lower() in falses:
+                json_object['settings']['show_badges'] = False
+            elif value.lower() in trues:
+                json_object['settings']['show_badges'] = True
+            else:
+                return await ctx.send(f'Thats not an accepted NEWVALUE. Accepted NEWVALUES are: ``{trues}`` and ``{falses}``.')
+            f = open(f'./data/{ctx.author.id}.json', 'w')
+            json.dump(json_object, f, indent=4)
+            f.close()
+
+            return await ctx.send(f'Successfully set ``{arg}`` to ``{value}``.')
+        
+        else:
+            return await ctx.send('Thats not an accepted SETTING. Accepted SETTINGS are: ``public`` and ``badges``.')
+
 
 bot.run(DISCORD_TOKEN)
