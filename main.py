@@ -37,7 +37,7 @@ def blacklist_check(ctx):
     print(blisted_users)
     blisted_guilds = readFile('./blacklisted/sortedblacklistedguilds.txt')
     return str(
-        ctx.author.id) not in blisted_users and str(
+        ctx.author.id) not in blisted_users or str(
         ctx.guild.id) not in blisted_guilds
 
 def checkFileExists(file):
@@ -187,6 +187,8 @@ async def on_message(message):
 
 @bot.command()
 async def whoami(ctx):
+    if blacklist_check(ctx):
+        return
     embed = discord.Embed(title = 'Based Bot', description = '**The most based bot on Discord.**', color = 0xFFCC)
     embed.add_field(name='Command Help', value= 'For command help, [Click Here](https://5late.github.io/guides/HIDDEN-BASED-BOT.html#commands)')
     embed.add_field(name='Creator', value='My creator is ``Xurxx#7879``')
@@ -195,6 +197,8 @@ async def whoami(ctx):
 
 @bot.command()
 async def reset(ctx, boc, person):
+    if blacklist_check(ctx):
+        return
     if not ctx.author.id == 564466359107321856:
         return
     if not checkFileExists(f'./data/{person}.json'):
@@ -219,6 +223,8 @@ async def reset(ctx, boc, person):
 
 @bot.command()
 async def blacklist(ctx, type, arg):
+    if blacklist_check(ctx):
+        return
     if not ctx.author.id == 564466359107321856:
         return
     def readFile(fileName):
@@ -283,6 +289,8 @@ async def blacklist(ctx, type, arg):
 
 @bot.command()
 async def mybasedcount(ctx):
+    if blacklist_check(ctx):
+        return
     if not checkFileExists(f'./data/{ctx.author.id}.json'):
         return await ctx.send('Nothing to show. What a boring person.')
     elif checkFileExists:
@@ -337,6 +345,8 @@ async def mybasedcount(ctx):
 
 @bot.command()
 async def basedcount(ctx, person:discord.Member=''):
+    if blacklist_check(ctx):
+        return
     if not checkFileExists(f'./data/{person.id}.json'):
         return await ctx.send('Nothing to show. What a boring person.')
     elif checkFileExists(f'./data/{person.id}.json'):
@@ -395,6 +405,8 @@ async def basedcount(ctx, person:discord.Member=''):
 
 @bot.command()
 async def ask(ctx, *, question):
+    if blacklist_check(ctx):
+        return
     with open(f'./{ctx.message.guild.id}-questionlog.txt', 'a') as f:
         f.write(f'<@{ctx.author.id}> asked: {question}\n')
         f.close()
@@ -402,6 +414,8 @@ async def ask(ctx, *, question):
 
 @bot.command()
 async def qa(ctx):
+    if blacklist_check(ctx):
+        return
     if not ctx.author.id == 564466359107321856:
         return
     f = open(f'./{ctx.message.guild.id}-questionlog.txt', 'r')
@@ -417,6 +431,8 @@ async def qa(ctx):
 
 @bot.command()
 async def update(ctx):
+    if blacklist_check(ctx):
+        return
     if not ctx.author.id == 564466359107321856:
         return
 
@@ -471,6 +487,8 @@ async def update(ctx):
     
 @bot.command()
 async def settings(ctx, arg='', value=''):
+    if blacklist_check(ctx):
+        return
     if not checkFileExists(f'./data/{ctx.author.id}.json'):
         return await ctx.send('Nothing to show. What a boring person.')
     elif checkFileExists(f'./data/{ctx.author.id}.json'):
@@ -521,6 +539,8 @@ async def settings(ctx, arg='', value=''):
 
 @bot.command()
 async def fed(ctx, person:discord.Member=None):
+    if blacklist_check(ctx):
+        return
     if person is None:
         person = ctx.author
 
@@ -538,6 +558,8 @@ async def fed(ctx, person:discord.Member=None):
 
     await ctx.send(file=discord.File("fbi-edited.png"))
     
-
+@bot.command()
+async def test(ctx):
+    print(blacklist_check(ctx))
 
 bot.run(DISCORD_TOKEN)
