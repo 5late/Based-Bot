@@ -36,10 +36,11 @@ def blacklist_check(ctx):
     blisted_users = readFile('./blacklisted/sortedblacklistedusers.txt')
     print(blisted_users)
     blisted_guilds = readFile('./blacklisted/sortedblacklistedguilds.txt')
-    return str(
-        ctx.author.id) not in blisted_users or str(
-        ctx.guild.id) not in blisted_guilds
-
+    if str(ctx.author.id) in blisted_users or str(ctx.message.guild.id) in blisted_guilds:
+        return False
+    else:
+        return True
+    
 def checkFileExists(file):
     return os.path.isfile(file)
 
@@ -290,7 +291,7 @@ async def blacklist(ctx, type, arg):
 @bot.command()
 async def mybasedcount(ctx):
     if blacklist_check(ctx):
-        return
+        return print(blacklist_check(ctx))
     if not checkFileExists(f'./data/{ctx.author.id}.json'):
         return await ctx.send('Nothing to show. What a boring person.')
     elif checkFileExists:
