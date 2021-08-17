@@ -40,6 +40,12 @@ def blacklist_check(author_id, guild_id):
         return True
     else:
         return False
+
+def getBotChannel(server_id):
+    f = open(f'./data/server_data/{server_id}.json', 'r')
+    json_object = json.load(f)
+    f.close()
+    return bot.get_channel(json_object['bot_channel'])
     
 def checkFileExists(file):
     return os.path.isfile(file)
@@ -193,7 +199,10 @@ async def whoami(ctx):
     embed = discord.Embed(title = 'Based Bot', description = '**The most based bot on Discord.**', color = 0xFFCC)
     embed.add_field(name='Command Help', value= 'For command help, [Click Here](https://5late.github.io/guides/HIDDEN-BASED-BOT.html#commands)')
     embed.add_field(name='Creator', value='My creator is ``Xurxx#7879``')
-    await ctx.send(embed=embed)
+
+    channel = getBotChannel(ctx.guild.id)
+    await channel.send(f'<@{ctx.author.id}>!')
+    await channel.send(embed=embed)
 
 
 @bot.command()
@@ -341,8 +350,10 @@ async def mybasedcount(ctx):
         embed.add_field(name='Cringe Title', value=cringe_title)
         embed.add_field(name='Last Cringed Count', value=f'{last_cringed_at} **UTC**')
         embed.set_thumbnail(url='attachment://thumbnail.png')
-
-        await ctx.send(embed = embed, file=thumbnail)
+        
+        channel = getBotChannel(ctx.guild.id)
+        await channel.send(f'<@{ctx.author.id}>!')
+        await channel.send(embed = embed, file=thumbnail)
 
 @bot.command()
 async def basedcount(ctx, person:discord.Member=''):
@@ -400,8 +411,10 @@ async def basedcount(ctx, person:discord.Member=''):
         embed.add_field(name='Cringe Title', value=cringe_title)
         embed.add_field(name='Last Cringed Count', value=f'{last_cringed_at} **UTC**')
         embed.set_thumbnail(url='attachment://thumbnail.png')
-
-        await ctx.send(embed = embed, file=thumbnail)
+        
+        channel = getBotChannel(ctx.guild.id)
+        await channel.send(f'<@{ctx.author.id}>!')
+        await channel.send(embed = embed, file=thumbnail)
     
 
 @bot.command()
@@ -411,7 +424,10 @@ async def ask(ctx, *, question):
     with open(f'./{ctx.message.guild.id}-questionlog.txt', 'a') as f:
         f.write(f'<@{ctx.author.id}> asked: {question}\n')
         f.close()
-    await ctx.send('Added your question! Your question may be answered the next time my creator opens Q/A time. You will be pinged when your question is asked.')
+    
+    channel = getBotChannel(ctx.guild.id)
+    await channel.send(f'<@{ctx.author.id}>!')
+    await channel.send('Added your question! Your question may be answered the next time my creator opens Q/A time. You will be pinged when your question is asked.')
 
 @bot.command()
 async def qa(ctx):
@@ -493,6 +509,7 @@ async def settings(ctx, arg='', value=''):
     if not checkFileExists(f'./data/{ctx.author.id}.json'):
         return await ctx.send('Nothing to show. What a boring person.')
     elif checkFileExists(f'./data/{ctx.author.id}.json'):
+        channel = getBotChannel(ctx.guild.id)
         f = open(f'./data/{ctx.author.id}.json', 'r')
         json_object = json.load(f)
         f.close()
@@ -506,7 +523,8 @@ async def settings(ctx, arg='', value=''):
             embed.add_field(name='Show Badges on Profile', value=json_object['settings']['show_badges'])
             embed.set_footer(text='Accepted SETTINGS are {public}, {badges}.')
 
-            await ctx.send(embed=embed)
+            await channel.send(f'<@{ctx.author.id}>!')
+            await channel.send(embed=embed)
         
         elif arg == 'public':
             if value.lower() in falses:
@@ -514,12 +532,14 @@ async def settings(ctx, arg='', value=''):
             elif value.lower() in trues:
                 json_object['settings']['public_profile'] = True
             else:
-                return await ctx.send(f'Thats not an accepted NEWVALUE. Accepted NEWVALUES are: ``{trues}`` and ``{falses}``.')
+                await channel.send(f'<@{ctx.author.id}>!')
+                return await channel.send(f'Thats not an accepted NEWVALUE. Accepted NEWVALUES are: ``{trues}`` and ``{falses}``.')
             f = open(f'./data/{ctx.author.id}.json', 'w')
             json.dump(json_object, f, indent=4)
             f.close()
-
-            return await ctx.send(f'Successfully set ``{arg}`` to ``{value}``.')
+            
+            await channel.send(f'<@{ctx.author.id}>!')
+            return await channel.send(f'Successfully set ``{arg}`` to ``{value}``.')
         
         elif arg == 'badges':
             if value.lower() in falses:
@@ -527,15 +547,18 @@ async def settings(ctx, arg='', value=''):
             elif value.lower() in trues:
                 json_object['settings']['show_badges'] = True
             else:
-                return await ctx.send(f'Thats not an accepted NEWVALUE. Accepted NEWVALUES are: ``{trues}`` and ``{falses}``.')
+                await channel.send(f'<@{ctx.author.id}>!')
+                return await channel.send(f'Thats not an accepted NEWVALUE. Accepted NEWVALUES are: ``{trues}`` and ``{falses}``.')
             f = open(f'./data/{ctx.author.id}.json', 'w')
             json.dump(json_object, f, indent=4)
             f.close()
 
-            return await ctx.send(f'Successfully set ``{arg}`` to ``{value}``.')
+            await channel.send(f'<@{ctx.author.id}>!')
+            return await channel.send(f'Successfully set ``{arg}`` to ``{value}``.')
         
         else:
-            return await ctx.send('Thats not an accepted SETTING. Accepted SETTINGS are: ``public`` and ``badges``.')
+            await channel.send(f'<@{ctx.author.id}>!')
+            return await channel.send('Thats not an accepted SETTING. Accepted SETTINGS are: ``public`` and ``badges``.')
 
 
 @bot.command()
@@ -556,8 +579,10 @@ async def fed(ctx, person:discord.Member=None):
     soyjak.paste(pfp, (550, 100))
 
     soyjak.save("fbi-edited.png")
-
-    await ctx.send(file=discord.File("fbi-edited.png"))
+    
+    channel = getBotChannel(ctx.guild.id)
+    await channel.send(f'<@{ctx.author.id}>!')
+    await channel.send(file=discord.File("fbi-edited.png"))
     
 @bot.command()
 async def test(ctx):
