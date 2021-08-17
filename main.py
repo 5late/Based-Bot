@@ -65,20 +65,31 @@ async def on_message(message):
                         "discord_id": member.id,
                         "server_id": message.guild.id,
                         "created_at": getTicks(),
-                        "data": {
-                            "based": {
-                                "based_count": 1,
-                                "based_title": "newb",
-                                "last_based_at": getTicks(),
-                                "last_based_by": message.author.id,
+                            "data": {
+                                "based": {
+                                    "based_count": 0,
+                                    "based_title": "newb",
+                                    "last_based_at": getTicks(),
+                                    "last_based_by": message.author.id
+                                },
+                                "cringe": {
+                                    "cringe_count": 1,
+                                    "cringe_title": "newb",
+                                    "last_cringed_at": getTicks(),
+                                    "last_cringed_by": message.author.id
+                                }
                             },
-                            "cringe": {
-                                "cringe_count": 0,
-                                "cringe_title": "newb",
-                                "last_cringed_at": getTicks(),
-                                "last_cringed_by": message.author.id
+                            "settings": {
+                                "public_profile": True,
+                                "show_badges": True
+                            },
+                            "badges": {
+                                "alpha_tester": False,
+                                "early_adopter": True,
+                                "developer": False,
+                                "owner": False,
+                                "donator": False
                             }
-                        }
                     }
                     json.dump(data, f, indent=4)
             
@@ -113,8 +124,9 @@ async def on_message(message):
             if not checkFileExists(f'./data/{member.id}.json'):
                 with open(f'./data/{member.id}.json', 'w') as f:
                     data = {
-                            "discord_id": member.id,
-                            "created_at": getTicks(),
+                        "discord_id": member.id,
+                        "server_id": message.guild.id,
+                        "created_at": getTicks(),
                             "data": {
                                 "based": {
                                     "based_count": 0,
