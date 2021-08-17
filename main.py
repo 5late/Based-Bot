@@ -113,7 +113,6 @@ async def on_message(message):
             if not checkFileExists(f'./data/{member.id}.json'):
                 with open(f'./data/{member.id}.json', 'w') as f:
                     data = {
-                        {
                             "discord_id": member.id,
                             "created_at": getTicks(),
                             "data": {
@@ -141,7 +140,6 @@ async def on_message(message):
                                 "owner": False,
                                 "donator": False
                             }
-                        }
                     }
                     json.dump(data, f, indent=4)
             
