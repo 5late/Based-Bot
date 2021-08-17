@@ -10,14 +10,16 @@ import json
 import asyncio
 from discord.ext import commands
 import time
+from PIL import Image, ImageFont, ImageDraw
+from io import BytesIO
 
 load_dotenv()
 
 intents = discord.Intents().all()
 
 DISCORD_TOKEN = os.getenv('discord_token')
-BASED = ['Based', 'based', 'Baste', 'baste']
-CRINGE = ['Cringe', 'cringe', 'soy', 'Soy']
+BASED = ['based', 'baste']
+CRINGE = ['cringe', 'soy']
 
 bot = commands.Bot(
     command_prefix='./',
@@ -515,6 +517,27 @@ async def settings(ctx, arg='', value=''):
         
         else:
             return await ctx.send('Thats not an accepted SETTING. Accepted SETTINGS are: ``public`` and ``badges``.')
+
+
+@bot.command()
+async def fed(ctx, person:discord.Member=None):
+    if person is None:
+        person = ctx.author
+
+    soyjak = Image.open("./imgs/fbi.png")
+
+    asset = person.avatar_url_as(size=128)
+    data = BytesIO(await asset.read())
+    pfp = Image.open(data)
+
+    pfp = pfp.resize((300, 300))
+
+    soyjak.paste(pfp, (550, 100))
+
+    soyjak.save("fbi-edited.png")
+
+    await ctx.send(file=discord.File("fbi-edited.png"))
+    
 
 
 bot.run(DISCORD_TOKEN)
