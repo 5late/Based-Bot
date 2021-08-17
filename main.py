@@ -383,7 +383,7 @@ async def basedcount(ctx, person:discord.Member=''):
 
 @bot.command()
 async def ask(ctx, *, question):
-    with open('./questionlog.txt', 'a') as f:
+    with open(f'./{ctx.message.guild.id}-questionlog.txt', 'a') as f:
         f.write(f'<@{ctx.author.id}> asked: {question}\n')
         f.close()
     await ctx.send('Added your question! Your question may be answered the next time my creator opens Q/A time. You will be pinged when your question is asked.')
@@ -392,14 +392,14 @@ async def ask(ctx, *, question):
 async def qa(ctx):
     if not ctx.author.id == 564466359107321856:
         return
-    f = open('./questionlog.txt', 'r')
+    f = open(f'./{ctx.message.guild.id}-questionlog.txt', 'r')
     lines = f.readlines()
 
     for line in lines:
         await ctx.send(line)
         await asyncio.sleep(1)
 
-    open('./questionlog.txt', 'w')
+    open(f'./{ctx.message.guild.id}-questionlog.txt', 'w')
     await ctx.send('End of questions.')
     
 

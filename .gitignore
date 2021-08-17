@@ -4,3 +4,4 @@ data_backup/
 blacklisted/
 questionlog.txt
 mainpyoutput.txt
+*.txt
