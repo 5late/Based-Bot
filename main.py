@@ -67,13 +67,13 @@ async def on_message(message):
                         "created_at": getTicks(),
                             "data": {
                                 "based": {
-                                    "based_count": 0,
+                                    "based_count": 1,
                                     "based_title": "newb",
                                     "last_based_at": getTicks(),
                                     "last_based_by": message.author.id
                                 },
                                 "cringe": {
-                                    "cringe_count": 1,
+                                    "cringe_count": 0,
                                     "cringe_title": "newb",
                                     "last_cringed_at": getTicks(),
                                     "last_cringed_by": message.author.id
