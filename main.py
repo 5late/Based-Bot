@@ -22,7 +22,7 @@ BASED = ['based', 'baste']
 CRINGE = ['cringe', 'soy']
 
 bot = commands.Bot(
-    command_prefix='./',
+    command_prefix='.//',
     description='Based Bot, the most based bot on Discord.',
     intents=intents)
 
@@ -52,6 +52,22 @@ def checkFileExists(file):
 
 def getTicks():
     return int(time.time())
+
+def generateBasedTitle(count):
+    if (count // 10) == 1:
+        return "newb"
+    elif (count // 10) <= 3:
+        return "a bit based"
+    elif (count // 10) <= 5:
+        return "distinguishably based"
+    elif (count // 10) <= 7:
+        return "Knight of the Based-ness"
+    elif (count // 10) <= 9:
+        return "Dangerously Based"
+    elif (count // 10) <= 15:
+        return "Too Based"
+    elif (count // 10) <= 20:
+        return "ERROR- Too Based"
 
 @bot.event
 async def on_ready():
@@ -115,6 +131,7 @@ async def on_message(message):
                 elif json_object['data']['based']['last_based_at'] + 100 >= getTicks() and json_object['data']['based']['last_based_by'] == message.author.id:
                     return
                 json_object['data']['based']['based_count'] += 1
+                json_object['data']['based']['based_title'] = generateBasedTitle(json_object['data']['based']['based_count'])
                 json_object['data']['based']['last_based_at'] = getTicks()
                 json_object['data']['based']['last_based_by'] = message.author.id
 
