@@ -40,15 +40,19 @@ def blacklist_check(author_id, guild_id):
         return True
     else:
         return False
-
-def getBotChannel(server_id):
-    f = open(f'./data/server_data/{server_id}.json', 'r')
-    json_object = json.load(f)
-    f.close()
-    return bot.get_channel(json_object['bot_channel'])
-    
+   
 def checkFileExists(file):
     return os.path.isfile(file)
+
+def getBotChannel(ctx):
+    if not checkFileExists(f'./data/server_data/{ctx.guild.id}.json'):
+        return bot.get_channel(ctx.channel.id)
+    elif checkFileExists(f'./data/server_data/{ctx.guild.id}.json'):
+        f = open(f'./data/server_data/{ctx.guild.id}.json', 'r')
+        json_object = json.load(f)
+        f.close()
+        return bot.get_channel(json_object['bot_channel'])
+    
 
 def getTicks():
     return int(time.time())
@@ -217,7 +221,7 @@ async def whoami(ctx):
     embed.add_field(name='Command Help', value= 'For command help, [Click Here](https://5late.github.io/guides/HIDDEN-BASED-BOT.html#commands)')
     embed.add_field(name='Creator', value='My creator is ``Xurxx#7879``')
 
-    channel = getBotChannel(ctx.guild.id)
+    channel = getBotChannel(ctx)
     await channel.send(f'<@{ctx.author.id}>!')
     await channel.send(embed=embed)
 
@@ -368,7 +372,7 @@ async def mybasedcount(ctx):
         embed.add_field(name='Last Cringed Count', value=f'{last_cringed_at} **UTC**')
         embed.set_thumbnail(url='attachment://thumbnail.png')
         
-        channel = getBotChannel(ctx.guild.id)
+        channel = getBotChannel(ctx)
         await channel.send(f'<@{ctx.author.id}>!')
         await channel.send(embed = embed, file=thumbnail)
 
@@ -429,7 +433,7 @@ async def basedcount(ctx, person:discord.Member=''):
         embed.add_field(name='Last Cringed Count', value=f'{last_cringed_at} **UTC**')
         embed.set_thumbnail(url='attachment://thumbnail.png')
         
-        channel = getBotChannel(ctx.guild.id)
+        channel = getBotChannel(ctx)
         await channel.send(f'<@{ctx.author.id}>!')
         await channel.send(embed = embed, file=thumbnail)
     
@@ -442,7 +446,7 @@ async def ask(ctx, *, question):
         f.write(f'<@{ctx.author.id}> asked: {question}\n')
         f.close()
     
-    channel = getBotChannel(ctx.guild.id)
+    channel = getBotChannel(ctx)
     await channel.send(f'<@{ctx.author.id}>!')
     await channel.send('Added your question! Your question may be answered the next time my creator opens Q/A time. You will be pinged when your question is asked.')
 
@@ -526,7 +530,7 @@ async def settings(ctx, arg='', value=''):
     if not checkFileExists(f'./data/{ctx.author.id}.json'):
         return await ctx.send('Nothing to show. What a boring person.')
     elif checkFileExists(f'./data/{ctx.author.id}.json'):
-        channel = getBotChannel(ctx.guild.id)
+        channel = getBotChannel(ctx)
         f = open(f'./data/{ctx.author.id}.json', 'r')
         json_object = json.load(f)
         f.close()
@@ -597,7 +601,7 @@ async def fed(ctx, person:discord.Member=None):
 
     soyjak.save("fbi-edited.png")
     
-    channel = getBotChannel(ctx.guild.id)
+    channel = getBotChannel(ctx)
     await channel.send(f'<@{ctx.author.id}>!')
     await channel.send(file=discord.File("fbi-edited.png"))
     
