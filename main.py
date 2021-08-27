@@ -58,7 +58,7 @@ def getTicks():
     return int(time.time())
 
 def generateBasedTitle(count):
-    if (count // 10) == 1:
+    if (count // 10) <= 1:
         return "newb"
     elif (count // 10) <= 3:
         return "a bit based"
@@ -72,6 +72,26 @@ def generateBasedTitle(count):
         return "One of the Based-est"
     elif (count // 10) <= 20:
         return "ERROR- Too Based"
+    else:
+        return "The Most Based"
+
+def generateCringeTitle(count):
+    if (count // 10) <= 1:
+        return "newb"
+    elif (count // 10) <= 3:
+        return "a bit cringe"
+    elif (count // 10) <= 5:
+        return "slightly soy"
+    elif (count // 10) <= 7:
+        return "extreme soy"
+    elif (count // 10) <= 9:
+        return "pure soy cringe"
+    elif (count // 10) <= 15:
+        return "Only Cringe Opinions"
+    elif (count // 10) <= 20:
+        return "ERROR- Too Cringe"
+    else:
+        return "The Most Cringe"
 
 @bot.event
 async def on_ready():
@@ -198,6 +218,7 @@ async def on_message(message):
                 elif json_object['data']['cringe']['last_cringed_at'] + 120 >= getTicks() and json_object['data']['cringe']['last_cringed_by'] == message.author.id:
                     return
                 json_object['data']['cringe']['cringe_count'] += 1
+                json_object['data']['based']['based_title'] = generateCringeTitle(json_object['data']['cringe']['cringe_count'])
                 json_object['data']['cringe']['last_cringed_at'] = getTicks()
                 json_object['data']['cringe']['last_cringed_by'] = message.author.id
 
