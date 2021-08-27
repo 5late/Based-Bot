@@ -65,7 +65,7 @@ def generateBasedTitle(count):
     elif (count // 10) <= 9:
         return "Dangerously Based"
     elif (count // 10) <= 15:
-        return "Too Based"
+        return "One of the Based-est"
     elif (count // 10) <= 20:
         return "ERROR- Too Based"
 
