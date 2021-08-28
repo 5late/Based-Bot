@@ -639,7 +639,7 @@ async def startLeaderboard(ctx):
 
     for file in onlyfiles:
         print(file)
-        if file == 'leaderboard.json':
+        if file == 'basedleaderboard.json':
             continue
         f = open(f'./data/{file}', 'r')
         json_object = json.load(f)
@@ -653,20 +653,21 @@ async def startLeaderboard(ctx):
 
         data = {
             "discord_id": discord_id,
+            "discord_id_string": str(discord_id),
             "based_count": based_count,
             "ranking": 0
         }
 
-        f = open('./data/leaderboard.json', 'r')
+        f = open('./data/basedleaderboard.json', 'r')
         nested_json = json.load(f)
         f.close()
 
-        f = open('./data/leaderboard.json', 'w')
+        f = open('./data/basedleaderboard.json', 'w')
         nested_json['data'] += [data]
         json.dump(nested_json, f, indent=4)
         f.close()
     
-    f = open('./data/leaderboard.json', 'w')
+    f = open('./data/basedleaderboard.json', 'w')
     nested_json['data'] = sorted(nested_json['data'], key=lambda r: r['based_count'], reverse=True)
     json.dump(nested_json, f, indent=4)
     f.close()
@@ -674,11 +675,23 @@ async def startLeaderboard(ctx):
     for count, value in enumerate(nested_json['data']):
         value['ranking'] = count
     
-    f = open('./data/leaderboard.json', 'w')
+    f = open('./data/basedleaderboard.json', 'w')
     json.dump(nested_json, f, indent=4)
     f.close()
 
-        
+@bot.command()
+async def basedleaderboard(ctx):
+    f = open('./data/basedleaderboard.json', 'r')
+    json_object = json.load(f)
+    f.close()
+
+    embed = discord.Embed(title='Based Leaderboard')
+    for count, ranking in enumerate(json_object['data']):
+        user = await bot.fetch_user(ranking['discord_id'])
+        embed.add_field(name=f'Rank {count + 1}', value=f"__{user.name}__ - **{ranking['based_count']}**")
+
+    await ctx.send(embed=embed)
+
 
 
 bot.run(DISCORD_TOKEN)
