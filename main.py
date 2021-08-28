@@ -20,6 +20,7 @@ intents = discord.Intents().all()
 DISCORD_TOKEN = os.getenv('discord_token')
 BASED = ['based', 'baste']
 CRINGE = ['cringe', 'soy']
+LEADERBOARD_BASE_COUNT = 5
 
 bot = commands.Bot(
     command_prefix='.//',
@@ -93,6 +94,56 @@ def generateCringeTitle(count):
     else:
         return "The Most Cringe"
 
+def updateLeaderboard(id, count, boc):
+    data = {
+        "discord_id": id,
+        "discord_id_string": str(id),
+        f"{boc}_count": count,
+        "ranking": 0
+    }
+
+    f = open(f'./data/{boc}leaderboard.json', 'r')
+    nested_json = json.load(f)
+    f.close()
+
+    for person in nested_json['data']:
+        if person['discord_id'] == id:
+            f = open(f'./data/{boc}leaderboard.json', 'w')    
+            person[f'{boc}_count'] = count
+            json.dump(nested_json, f, indent=4)
+            f.close()
+            return
+    
+
+    f = open(f'./data/{boc}leaderboard.json', 'w')
+    nested_json['data'] += [data]
+    json.dump(nested_json, f, indent=4)
+    f.close()
+    
+    f = open(f'./data/{boc}leaderboard.json', 'w')
+    nested_json['data'] = sorted(nested_json['data'], key=lambda r: r[f'{boc}_count'], reverse=True)
+    json.dump(nested_json, f, indent=4)
+    f.close()
+
+    for count, value in enumerate(nested_json['data']):
+        value['ranking'] = count
+    
+    f = open(f'./data/{boc}leaderboard.json', 'w')
+    json.dump(nested_json, f, indent=4)
+    f.close()
+
+
+def updateLeaderboardWithID(id, boc):
+    with open(f'./data/{id}.json', 'r') as f:
+        json_object = json.load(f)
+
+        if json_object['data'][boc][f'{boc}_count'] < int(LEADERBOARD_BASE_COUNT):
+            return
+        
+        updateLeaderboard(id, json_object['data'][boc][f'{boc}_count'], boc)
+
+            
+
 @bot.event
 async def on_ready():
     global botUptime
@@ -108,6 +159,7 @@ async def on_message(message):
         # Based stuff goes here
         
         for member in message.mentions:
+            updateLeaderboardWithID(member.id, 'based')
             if not checkFileExists(f'./data/{member.id}.json'):
                 with open(f'./data/{member.id}.json', 'w') as f:
                     data = {
@@ -172,6 +224,7 @@ async def on_message(message):
         # cringe stuff goes here
 
         for member in message.mentions:
+            updateLeaderboardWithID(member.id, 'cringe')
             if not checkFileExists(f'./data/{member.id}.json'):
                 with open(f'./data/{member.id}.json', 'w') as f:
                     data = {
