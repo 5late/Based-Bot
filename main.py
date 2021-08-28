@@ -648,7 +648,7 @@ async def startLeaderboard(ctx):
         discord_id = json_object['discord_id']
         based_count = json_object['data']['based']['based_count']
 
-        if based_count < 9:
+        if based_count < 5:
             continue
 
         data = {
@@ -670,6 +670,14 @@ async def startLeaderboard(ctx):
     nested_json['data'] = sorted(nested_json['data'], key=lambda r: r['based_count'], reverse=True)
     json.dump(nested_json, f, indent=4)
     f.close()
+
+    for count, value in enumerate(nested_json['data']):
+        value['ranking'] = count
+    
+    f = open('./data/leaderboard.json', 'w')
+    json.dump(nested_json, f, indent=4)
+    f.close()
+
         
 
 
