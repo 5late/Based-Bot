@@ -112,6 +112,7 @@ async def on_message(message):
                 with open(f'./data/{member.id}.json', 'w') as f:
                     data = {
                         "discord_id": member.id,
+                        "discord_name": member.name,
                         "server_id": message.guild.id,
                         "created_at": getTicks(),
                             "data": {
@@ -175,6 +176,7 @@ async def on_message(message):
                 with open(f'./data/{member.id}.json', 'w') as f:
                     data = {
                         "discord_id": member.id,
+                        "discord_name": member.name,
                         "server_id": message.guild.id,
                         "created_at": getTicks(),
                             "data": {
@@ -541,6 +543,14 @@ async def update(ctx):
             }
             write_json(server_id, f'./data/{file}')
 
+        elif not "discord_name" in json_object:
+            file_count += 1
+            user = await bot.fetch_user(json_object['discord_id'])
+            discord_name = {
+                "discord_name": user.name
+            }
+            write_json(discord_name, f'./data/{file}')
+
     await ctx.send(f'Updated {file_count} files with new data.')
 
     
@@ -681,15 +691,7 @@ async def startLeaderboard(ctx):
 
 @bot.command()
 async def basedleaderboard(ctx):
-    f = open('./data/basedleaderboard.json', 'r')
-    json_object = json.load(f)
-    f.close()
-
-    embed = discord.Embed(title='Based Leaderboard')
-    for count, ranking in enumerate(json_object['data']):
-        user = await bot.fetch_user(ranking['discord_id'])
-        embed.add_field(name=f'Rank {count + 1}', value=f"__{user.name}__ - **{ranking['based_count']}**")
-
+    embed = discord.Embed(description='See the leaderboard here. (Under construction)')
     await ctx.send(embed=embed)
 
 
