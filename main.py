@@ -630,4 +630,47 @@ async def fed(ctx, person:discord.Member=None):
 async def test(ctx):
     print(blacklist_check(ctx.author.id, ctx.guild.id))
 
+@bot.command()
+async def startLeaderboard(ctx):
+    if not ctx.author.id == 564466359107321856:
+        return
+    
+    onlyfiles = [f for f in os.listdir('./data/') if os.path.isfile(os.path.join('./data/', f))]
+
+    for file in onlyfiles:
+        print(file)
+        if file == 'leaderboard.json':
+            continue
+        f = open(f'./data/{file}', 'r')
+        json_object = json.load(f)
+        f.close()
+
+        discord_id = json_object['discord_id']
+        based_count = json_object['data']['based']['based_count']
+
+        if based_count < 9:
+            continue
+
+        data = {
+            "discord_id": discord_id,
+            "based_count": based_count,
+            "ranking": 0
+        }
+
+        f = open('./data/leaderboard.json', 'r')
+        nested_json = json.load(f)
+        f.close()
+
+        f = open('./data/leaderboard.json', 'w')
+        nested_json['data'] += [data]
+        json.dump(nested_json, f, indent=4)
+        f.close()
+    
+    f = open('./data/leaderboard.json', 'w')
+    nested_json['data'] = sorted(nested_json['data'], key=lambda r: r['based_count'], reverse=True)
+    json.dump(nested_json, f, indent=4)
+    f.close()
+        
+
+
 bot.run(DISCORD_TOKEN)
