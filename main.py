@@ -567,7 +567,10 @@ async def update(ctx):
 
     for file in files:
         f = open(f'./data/{file}', 'r')
-        json_object = json.load(f)
+        try:
+            json_object = json.load(f)
+        except BaseException:
+            continue
 
         if not "settings" in json_object:
             file_count += 1
