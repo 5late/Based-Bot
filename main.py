@@ -715,6 +715,7 @@ async def startLeaderboard(ctx):
         f.close()
 
         discord_id = json_object['discord_id']
+        discord_name = json_object['discord_name']
         based_count = json_object['data']['based']['based_count']
 
         if based_count < 5:
@@ -723,6 +724,7 @@ async def startLeaderboard(ctx):
         data = {
             "discord_id": discord_id,
             "discord_id_string": str(discord_id),
+            "discord_name": discord_name,
             "based_count": based_count,
             "ranking": 0
         }
