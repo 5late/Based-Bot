@@ -708,7 +708,10 @@ async def startLeaderboard(ctx):
         if file == 'basedleaderboard.json':
             continue
         f = open(f'./data/{file}', 'r')
-        json_object = json.load(f)
+        try:
+            json_object = json.load(f)
+        except BaseException:
+            continue
         f.close()
 
         discord_id = json_object['discord_id']
