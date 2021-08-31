@@ -196,7 +196,7 @@ async def on_message(message):
                             }
                     }
                     json.dump(data, f, indent=4)
-                    updateLeaderboardWithID(member.id, 'based')
+                updateLeaderboardWithID(member.id, 'based')
             
             elif checkFileExists(f'./data/{member.id}.json'):
                 updateLeaderboardWithID(member.id, 'based')
@@ -275,7 +275,7 @@ async def on_message(message):
                             }
                     }
                     json.dump(data, f, indent=4)
-                    updateLeaderboardWithID(member.id, 'cringe')
+                updateLeaderboardWithID(member.id, 'cringe')
             
             elif checkFileExists(f'./data/{member.id}.json'):
                 updateLeaderboardWithID(member.id, 'cringe')
