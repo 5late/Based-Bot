@@ -230,6 +230,7 @@ async def on_message(message):
                 f_bot = open(f'./data/870487608105525298.json', 'w')
                 json.dump(json_object, f_bot, indent=4)
                 f_bot.close()
+                updateLeaderboardWithID('870487608105525298', 'based')
 
             print(member.id)
         
