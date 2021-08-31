@@ -774,6 +774,11 @@ async def basedleaderboard(ctx):
     embed = discord.Embed(description='See the leaderboard [here!](https://slatedev.xyz/basedbot/basedleaderboard)')
     await ctx.send(embed=embed)
 
+@bot.command()
+async def cringeleaderboard(ctx):
+    embed = discord.Embed(description='See the leaderboard [here!](https://slatedev.xyz/basedbot/cringeleaderboard)')
+    await ctx.send(embed=embed)
+
 
 
 bot.run(DISCORD_TOKEN)
