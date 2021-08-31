@@ -768,7 +768,7 @@ async def startLeaderboard(ctx):
 
 @bot.command()
 async def basedleaderboard(ctx):
-    embed = discord.Embed(description='See the leaderboard here. (Under construction)')
+    embed = discord.Embed(description='See the leaderboard [here!](https://slatedev.xyz/basedbot/basedleaderboard)')
     await ctx.send(embed=embed)
 
 
