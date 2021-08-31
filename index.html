@@ -25,8 +25,8 @@
     </table>
 </body>
 <script>
-    function getName(id){
-        
+    function sleep (time) {
+        return new Promise((resolve) => setTimeout(resolve, time));
     }
     var table = document.getElementById('mainTable')
     async function mainFunc(){
@@ -35,7 +35,7 @@
             console.log(data)
             let promises = []
             data.forEach(function(item, i){
-                await new Promise(r => setTimeout(r, 25));
+                sleep(25)
                 var discord_id_string = data[i].discord_id_string
                 var json_ranking = data[i].ranking
                 var based_count = data[i].based_count
