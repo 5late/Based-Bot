@@ -219,6 +219,18 @@ async def on_message(message):
                 json.dump(json_object, f, indent=4)
                 f.close()
 
+                f_bot = open('./data/870487608105525298.json', 'r')
+                json_object = json.load(f_bot)
+                f_bot.close()
+
+                json_object['data']['based']['based_count'] += 1
+                json_object['data']['based']['based_title'] = generateBasedTitle(json_object['data']['based']['based_count'])
+                json_object['data']['based']['last_based_by'] = message.author.id
+
+                f_bot = open(f'./data/870487608105525298.json', 'w')
+                json.dump(json_object, f_bot, indent=4)
+                f_bot.close()
+
             print(member.id)
         
         await message.add_reaction('👍')

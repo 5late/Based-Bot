@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>test</title>
+    <title>Based Leaderboard</title>
 </head>
 <style>
     html{
@@ -45,7 +45,7 @@
                 var ranking = document.createElement('td')
 
                 try{
-                fetch(`https://api.slatedev.xyz:12443/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json()).then(new_json => {
+                fetch(`https://api.slatedev.xyz:12443/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json().then(console.log(response.headers))).then(new_json => {
                     console.log(new_json.discord_name)
                     let name = new_json.discord_name
                     
