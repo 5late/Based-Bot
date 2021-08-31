@@ -14,18 +14,25 @@
     html{
         background-color: #192c35e8;
         color: wheat;
-        font-size: 2em;
+        font-size: 1.5em;
+    }
+
+    body{
         display: flex;
         justify-content: center;
+        align-items: center;
     }
+
     .ranking{
-	text-align: center;
+	    text-align: center;
     }
+
     .bc{
-	text-align: center;
+	    text-align: center;
     }
 </style>
 <body>
+<div id="mainTableHolder">
     <table id="mainTable">
         <tr>
             <th>Ranking</th>
@@ -33,6 +40,7 @@
             <th>Name</th>
         </tr>
     </table>
+</div>
 </body>
 <script>
     function sleep (time) {

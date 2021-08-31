@@ -162,7 +162,6 @@ async def on_message(message):
         # Based stuff goes here
         
         for member in message.mentions:
-            updateLeaderboardWithID(member.id, 'based')
             if not checkFileExists(f'./data/{member.id}.json'):
                 with open(f'./data/{member.id}.json', 'w') as f:
                     data = {
@@ -197,8 +196,10 @@ async def on_message(message):
                             }
                     }
                     json.dump(data, f, indent=4)
+                    updateLeaderboardWithID(member.id, 'based')
             
             elif checkFileExists(f'./data/{member.id}.json'):
+                updateLeaderboardWithID(member.id, 'based')
                 if member.id == message.author.id:
                     return
                 f = open(f'./data/{member.id}.json', 'r')
@@ -240,7 +241,6 @@ async def on_message(message):
         # cringe stuff goes here
 
         for member in message.mentions:
-            updateLeaderboardWithID(member.id, 'cringe')
             if not checkFileExists(f'./data/{member.id}.json'):
                 with open(f'./data/{member.id}.json', 'w') as f:
                     data = {
@@ -275,8 +275,10 @@ async def on_message(message):
                             }
                     }
                     json.dump(data, f, indent=4)
+                    updateLeaderboardWithID(member.id, 'cringe')
             
             elif checkFileExists(f'./data/{member.id}.json'):
+                updateLeaderboardWithID(member.id, 'cringe')
                 if member.id == message.author.id:
                     return
                 f = open(f'./data/{member.id}.json', 'r')
