@@ -34,22 +34,23 @@
     }
     var table = document.getElementById('mainTable')
     async function mainFunc(){
-        fetch('https://api.slatedev.xyz:12443/api/basedbot/v1/globalbasedleaderboard').then(response => response.json()).then(json => {
+        fetch('https://api.slatedev.xyz:12443/api/basedbot/v1/globalcringeleaderboard').then(response => response.json()).then(json => {
             var data = json.data
             console.log(data)
             let promises = []
-            data.forEach(function(item, i){
+            data.forEach(async function(item, i){
                 sleep(25)
                 var discord_id_string = data[i].discord_id_string
                 var json_ranking = data[i].ranking
-                var based_count = data[i].based_count
-                var table_row = document.createElement('tr')
-                var table_data = document.createElement('td')
-                var based_count_data = document.createElement('td')
+                var cringe_count = data[i].cringe_count
+                var table_row = document.createElement('li')
+                table_row.className = 'row'
+                var table_data = document.createElement('mark')
+                var cringe_count_data = document.createElement('small')
                 var ranking = document.createElement('td')
 
                 try{
-                fetch(`https://api.slatedev.xyz:12443/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json().then(console.log(response.headers))).then(new_json => {
+                await fetch(`https://api.slatedev.xyz:12443/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json().then(console.log(response.headers))).then(new_json => {
                     console.log(new_json.discord_name)
                     let name = new_json.discord_name
                     
@@ -60,18 +61,13 @@
                 catch (e){
                     console.log(e.message)
                 }
-
-                ranking.innerText = json_ranking + 1
-                table_row.appendChild(ranking)
                 
-                based_count_data.innerText = based_count
-                table_row.appendChild(based_count_data)                
+                cringe_count_data.innerText = cringe_count
+                table_row.appendChild(cringe_count_data)                
                 
-                table.appendChild(table_row)
-            })
-            
+                nest.appendChild(table_row)
+            })  
         })
-    document.body.appendChild(table)
     }
     mainFunc()
 </script>
