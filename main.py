@@ -721,7 +721,7 @@ async def startLeaderboard(ctx):
 
     for file in onlyfiles:
         print(file)
-        if file == 'basedleaderboard.json':
+        if file == 'cringeleaderboard.json':
             continue
         f = open(f'./data/{file}', 'r')
         try:
@@ -730,9 +730,12 @@ async def startLeaderboard(ctx):
             continue
         f.close()
 
-        discord_id = json_object['discord_id']
-        discord_name = json_object['discord_name']
-        based_count = json_object['data']['based']['based_count']
+        try:
+            discord_id = json_object['discord_id']
+            discord_name = json_object['discord_name']
+            based_count = json_object['data']['cringe']['cringe_count']
+        except:
+            continue
 
         if based_count < 5:
             continue
@@ -741,28 +744,28 @@ async def startLeaderboard(ctx):
             "discord_id": discord_id,
             "discord_id_string": str(discord_id),
             "discord_name": discord_name,
-            "based_count": based_count,
+            "cringe_count": based_count,
             "ranking": 0
         }
 
-        f = open('./data/basedleaderboard.json', 'r')
+        f = open('./data/cringeleaderboard.json', 'r')
         nested_json = json.load(f)
         f.close()
 
-        f = open('./data/basedleaderboard.json', 'w')
+        f = open('./data/cringeleaderboard.json', 'w')
         nested_json['data'] += [data]
         json.dump(nested_json, f, indent=4)
         f.close()
     
-    f = open('./data/basedleaderboard.json', 'w')
-    nested_json['data'] = sorted(nested_json['data'], key=lambda r: r['based_count'], reverse=True)
+    f = open('./data/cringeleaderboard.json', 'w')
+    nested_json['data'] = sorted(nested_json['data'], key=lambda r: r['cringe_count'], reverse=True)
     json.dump(nested_json, f, indent=4)
     f.close()
 
     for count, value in enumerate(nested_json['data']):
         value['ranking'] = count
     
-    f = open('./data/basedleaderboard.json', 'w')
+    f = open('./data/cringeleaderboard.json', 'w')
     json.dump(nested_json, f, indent=4)
     f.close()
 
