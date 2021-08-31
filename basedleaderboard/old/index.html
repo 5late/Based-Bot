@@ -18,6 +18,12 @@
         display: flex;
         justify-content: center;
     }
+    .ranking{
+	text-align: center;
+    }
+    .bc{
+	text-align: center;
+    }
 </style>
 <body>
     <table id="mainTable">
@@ -47,6 +53,8 @@
                 var table_data = document.createElement('td')
                 var based_count_data = document.createElement('td')
                 var ranking = document.createElement('td')
+		ranking.className = 'ranking'
+		based_count_data.className = 'bc'
 
                 try{
                 fetch(`https://api.slatedev.xyz:12443/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json().then(console.log(response.headers))).then(new_json => {

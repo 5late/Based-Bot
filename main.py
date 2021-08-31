@@ -23,7 +23,7 @@ CRINGE = ['cringe', 'soy']
 LEADERBOARD_BASE_COUNT = 5
 
 bot = commands.Bot(
-    command_prefix='.//',
+    command_prefix='./',
     description='Based Bot, the most based bot on Discord.',
     intents=intents)
 
@@ -721,7 +721,7 @@ async def startLeaderboard(ctx):
 
     for file in onlyfiles:
         print(file)
-        if file == 'cringeleaderboard.json':
+        if file == 'basedleaderboard.json' or file == 'cringeleaderboard.json':
             continue
         f = open(f'./data/{file}', 'r')
         try:
@@ -733,7 +733,7 @@ async def startLeaderboard(ctx):
         try:
             discord_id = json_object['discord_id']
             discord_name = json_object['discord_name']
-            based_count = json_object['data']['cringe']['cringe_count']
+            based_count = json_object['data']['based']['based_count']
         except:
             continue
 
@@ -744,28 +744,28 @@ async def startLeaderboard(ctx):
             "discord_id": discord_id,
             "discord_id_string": str(discord_id),
             "discord_name": discord_name,
-            "cringe_count": based_count,
+            "based_count": based_count,
             "ranking": 0
         }
 
-        f = open('./data/cringeleaderboard.json', 'r')
+        f = open('./data/basedleaderboard.json', 'r')
         nested_json = json.load(f)
         f.close()
 
-        f = open('./data/cringeleaderboard.json', 'w')
+        f = open('./data/basedleaderboard.json', 'w')
         nested_json['data'] += [data]
         json.dump(nested_json, f, indent=4)
         f.close()
     
-    f = open('./data/cringeleaderboard.json', 'w')
-    nested_json['data'] = sorted(nested_json['data'], key=lambda r: r['cringe_count'], reverse=True)
+    f = open('./data/basedleaderboard.json', 'w')
+    nested_json['data'] = sorted(nested_json['data'], key=lambda r: r['based_count'], reverse=True)
     json.dump(nested_json, f, indent=4)
     f.close()
 
     for count, value in enumerate(nested_json['data']):
         value['ranking'] = count
     
-    f = open('./data/cringeleaderboard.json', 'w')
+    f = open('./data/basedleaderboard.json', 'w')
     json.dump(nested_json, f, indent=4)
     f.close()
 
