@@ -435,12 +435,14 @@ async def mybasedcount(ctx):
             badges += '<:developer:876856568996560937>'
         if json_object['badges']['donator'] == True:
             badges += '<:donator:876856567859929188>'
+
         based_count = json_object['data']['based']['based_count']
         based_title = json_object['data']['based']['based_title']
         last_based_at = json_object['data']['based']['last_based_at']
         cringe_count = json_object['data']['cringe']['cringe_count']
         cringe_title = json_object['data']['cringe']['cringe_title']
         last_cringed_at = json_object['data']['cringe']['last_cringed_at']
+        decimal = round(based_count / cringe_count, 2)
         
         if based_count > cringe_count:
             thumbnail = discord.File('./imgs/based.png', 'thumbnail.png')
@@ -464,6 +466,7 @@ async def mybasedcount(ctx):
         embed.add_field(name='Cringe Count', value=cringe_count)
         embed.add_field(name='Cringe Title', value=cringe_title)
         embed.add_field(name='Last Cringed Count', value=f'{last_cringed_at} **UTC**')
+        embed.add_field(name='Based to Cringe Ratio', value=f'``{decimal}``')
         embed.set_thumbnail(url='attachment://thumbnail.png')
         
         channel = getBotChannel(ctx)
