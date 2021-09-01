@@ -62,7 +62,6 @@
       backface-visibility: hidden;
       transform: translateZ(0) scale(1.0, 1.0);
       list-style-type: none;
-      
     }
 
     li::before {
@@ -78,6 +77,14 @@
         background: #fff;
         border-radius: 20px;
         text-align: center;
+    }
+
+    li:hover{
+        transform: scaleX(1.06) scaleY(1.03);
+        transition: all 300ms ease-in-out;
+        margin: 5px;
+        border: 1px solid #fa6855;
+        background-color: #5162fc;
     }
 
     li:nth-child(1) {
