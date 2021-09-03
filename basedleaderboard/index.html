@@ -13,17 +13,17 @@
 <style>
     @media only screen and (max-device-width: 450px){
         #leaderboard{
-            position: absolute;
-            left: 150%;
-            top: 50%;
-            translate: (-50%, -50%);
-            width: 15em;
-            height: 10em;
+            position: relative;
             overflow-y: auto;
-            background-color: #606ff2;
+            overflow-x: clip !important;
+            width: 20em !important;
+            background-color: #f26060;
             border-radius: 10px;
             scrollbar-width: none;
         }
+    }
+    html{
+        scrollbar-width: none;
     }
     h1{
         font-size: 2em;
@@ -33,17 +33,16 @@
     }
 
     body{
-        min-height: 450px;
+        width: 100vw;
         height: 100vh;
-        margin: 0;
-        background: radial-gradient(farthest-corner at center top, #64e9f3 0%, #606ff2 100%);
+        background: linear-gradient(#64e9f3 0%, #606ff2 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     #leaderboard{
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
         width: 35em;
         height: 30em;
         overflow-y: auto;
