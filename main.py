@@ -442,6 +442,8 @@ async def mybasedcount(ctx):
         cringe_count = json_object['data']['cringe']['cringe_count']
         cringe_title = json_object['data']['cringe']['cringe_title']
         last_cringed_at = json_object['data']['cringe']['last_cringed_at']
+        if cringe_count == 0:
+            cringe_count = 1
         decimal = round(based_count / cringe_count, 2)
         
         if based_count > cringe_count:
@@ -506,6 +508,8 @@ async def basedcount(ctx, person:discord.Member=''):
         cringe_count = json_object['data']['cringe']['cringe_count']
         cringe_title = json_object['data']['cringe']['cringe_title']
         last_cringed_at = json_object['data']['cringe']['last_cringed_at']
+        if cringe_count == 0:
+            cringe_count = 1
         decimal = round(based_count / cringe_count, 2)
         
         if based_count > cringe_count:
