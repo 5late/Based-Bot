@@ -4,13 +4,27 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=, initial-scale=1.0">
-    <title>Based Leaderboard</title>
+    <title>Cringe Leaderboard</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alfa+Slab+One">
     <script src="https://kit.fontawesome.com/1c2c2462bf.js" crossorigin="anonymous"></script>
 </head>
 <style>
+    @media only screen and (max-device-width: 575px){
+        #leaderboard{
+            position: relative;
+            overflow-y: auto;
+            overflow-x: clip !important;
+            width: 20em !important;
+            background-color: #f26060;
+            border-radius: 10px;
+            scrollbar-width: none;
+        }
+    }
+    html{
+        scrollbar-width: none;
+    }
     h1{
         font-size: 2em;
         color: #e1e1e1;
@@ -19,17 +33,16 @@
     }
 
     body{
-        min-height: 450px;
+        width: 100vw;
         height: 100vh;
-        margin: 0;
-        background: radial-gradient(farthest-corner at center top, #f39d64 0%, #f26060 100%);
+        background: linear-gradient(#f39d64 0%, #f26060 100%);
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 
     #leaderboard{
         position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
         width: 35em;
         height: 30em;
         overflow-y: auto;
