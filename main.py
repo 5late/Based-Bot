@@ -1,16 +1,13 @@
-from re import T
 import discord
 from datetime import datetime, timezone
 from discord.ext.commands.core import check
-from discord.file import File
 from dotenv import load_dotenv
 import os
-import requests
 import json
 import asyncio
 from discord.ext import commands
 import time
-from PIL import Image, ImageFont, ImageDraw
+from PIL import Image
 from io import BytesIO
 
 load_dotenv()
