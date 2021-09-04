@@ -716,7 +716,7 @@ async def fed(ctx, person:discord.Member=None):
     soyjak.save("fbi-edited.png")
     
     channel = getBotChannel(ctx)
-    await channel.send(f'<@{ctx.author.id}>!')
+    await channel.send(f'<@{ctx.author.id}>, <@{person.id}>!')
     await channel.send(file=discord.File("fbi-edited.png"))
     
 @bot.command()
