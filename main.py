@@ -142,7 +142,16 @@ def updateLeaderboardWithID(id, boc):
         
         updateLeaderboard(id, json_object['data'][boc][f'{boc}_count'], boc)
 
-            
+
+def updateServerCount(server_id):
+    with open(f'./data/server_data/{server_id}.json', 'r') as f:
+        json_object = json.load(f)
+
+        json_object['command_count'] += 1
+
+        with open(f'./data/server_data/{server_id}.json', 'w') as f:
+            json.dump(json_object, f, indent=4)
+
 
 @bot.event
 async def on_ready():
@@ -159,6 +168,7 @@ async def on_message(message):
         # Based stuff goes here
         
         for member in message.mentions:
+            updateServerCount(message.guild.id)
             if not checkFileExists(f'./data/{member.id}.json'):
                 with open(f'./data/{member.id}.json', 'w') as f:
                     data = {
@@ -238,6 +248,7 @@ async def on_message(message):
         # cringe stuff goes here
 
         for member in message.mentions:
+            updateServerCount(message.guild.id)
             if not checkFileExists(f'./data/{member.id}.json'):
                 with open(f'./data/{member.id}.json', 'w') as f:
                     data = {
