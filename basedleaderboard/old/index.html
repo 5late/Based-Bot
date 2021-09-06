@@ -48,7 +48,7 @@
     }
     var table = document.getElementById('mainTable')
     async function mainFunc(){
-        fetch('https://api.slatedev.xyz:12443/api/basedbot/v1/globalbasedleaderboard').then(response => response.json()).then(json => {
+        fetch('https://api.slatedev.xyz/api/basedbot/v1/globalbasedleaderboard').then(response => response.json()).then(json => {
             var data = json.data
             console.log(data)
             let promises = []
@@ -65,7 +65,7 @@
 		based_count_data.className = 'bc'
 
                 try{
-                fetch(`https://api.slatedev.xyz:12443/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json().then(console.log(response.headers))).then(new_json => {
+                fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json().then(console.log(response.headers))).then(new_json => {
                     console.log(new_json.discord_name)
                     let name = new_json.discord_name
                     
