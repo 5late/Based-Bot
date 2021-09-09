@@ -321,7 +321,7 @@ async def whoami(ctx):
         return
     embed = discord.Embed(title = 'Based Bot', description = '**The most based bot on Discord.**', color = 0xFFCC)
     embed.add_field(name='Command Help', value= 'For command help, [Click Here](https://5late.github.io/guides/HIDDEN-BASED-BOT.html#commands)')
-    embed.add_field(name='Creator', value='My creator is ``Xurxx#7879``')
+    embed.add_field(name='Creator', value='My creator is ``Slate#7879``')
 
     channel = getBotChannel(ctx)
     await channel.send(f'<@{ctx.author.id}>!')
