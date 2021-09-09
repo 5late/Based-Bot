@@ -299,7 +299,7 @@ async def on_message(message):
                 elif json_object['data']['cringe']['last_cringed_at'] + 120 >= getTicks() and json_object['data']['cringe']['last_cringed_by'] == message.author.id:
                     return
                 json_object['data']['cringe']['cringe_count'] += 1
-                json_object['data']['based']['based_title'] = generateCringeTitle(json_object['data']['cringe']['cringe_count'])
+                json_object['data']['cringe']['cringe_title'] = generateCringeTitle(json_object['data']['cringe']['cringe_count'])
                 json_object['data']['cringe']['last_cringed_at'] = getTicks()
                 json_object['data']['cringe']['last_cringed_by'] = message.author.id
 
