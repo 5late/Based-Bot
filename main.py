@@ -20,7 +20,7 @@ CRINGE = ['cringe', 'soy']
 LEADERBOARD_BASE_COUNT = 5
 
 bot = commands.Bot(
-    command_prefix='./',
+    command_prefix='.//',
     description='Based Bot, the most based bot on Discord.',
     intents=intents)
 
@@ -329,7 +329,7 @@ async def whoami(ctx):
 
 
 @bot.command()
-async def reset(ctx, boc, person):
+async def reset(ctx, boc, person, new=''):
     if blacklist_check(ctx.author.id, ctx.guild.id):
         return
     if not ctx.author.id == 564466359107321856:
@@ -342,16 +342,22 @@ async def reset(ctx, boc, person):
         f.close()
 
         if boc.lower() == 'based':
-            json_object['data'][boc][f'based_count'] = 0
+            if new == None:
+                json_object['data'][boc][f'based_count'] = 0
+            else:
+                json_object['data'][boc]['based_count'] = int(new)
             json_object['data'][boc][f'based_title'] = 'newb'
         elif boc.lower() == 'cringe':
-            json_object['data'][boc][f'cringe_count'] = 0
+            if new == None:
+                json_object['data'][boc][f'cringe_count'] = 0
+            else:
+                json_object['data'][boc]['cringe_count'] = int(new)
             json_object['data'][boc][f'cringe_title'] = 'newb'
 
         f = open(f'./data/{person}.json', 'w')
         json.dump(json_object, f, indent=4)
         f.close()
-        return await ctx.send(f'Reset <@{person}> {boc} score to 0.')
+        return await ctx.send(f'Reset <@{person}> {boc} score to new value.')
         
 
 @bot.command()
