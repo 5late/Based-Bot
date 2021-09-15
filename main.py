@@ -342,13 +342,13 @@ async def reset(ctx, boc, person, new=''):
         f.close()
 
         if boc.lower() == 'based':
-            if new == None:
+            if new == '':
                 json_object['data'][boc][f'based_count'] = 0
             else:
                 json_object['data'][boc]['based_count'] = int(new)
             json_object['data'][boc][f'based_title'] = 'newb'
         elif boc.lower() == 'cringe':
-            if new == None:
+            if new == '':
                 json_object['data'][boc][f'cringe_count'] = 0
             else:
                 json_object['data'][boc]['cringe_count'] = int(new)
