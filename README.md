@@ -6,6 +6,9 @@ Based Bot, the most based bot on Discord.
 
 Read the doc [here.](https://slatedev.xyz/basedbot)
 
+## Contribute
+
+Feel free to contribute code in PR's, I will take a look.
 
 ## License
 
