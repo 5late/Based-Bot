@@ -182,7 +182,7 @@
             var data = json.data
             console.log(data)
             let promises = []
-            data.forEach(async function(item, i){
+            data.forEach(function(item, i){
                 sleep(25)
                 var discord_id_string = data[i].discord_id_string
                 var json_ranking = data[i].ranking
@@ -194,7 +194,7 @@
                 var ranking = document.createElement('td')
 
                 try{
-                await fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json().then(console.log(response.headers))).then(new_json => {
+                fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json().then(console.log(response.headers))).then(new_json => {
                     console.log(new_json.discord_name)
                     let name = new_json.discord_name
                     
