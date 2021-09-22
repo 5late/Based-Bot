@@ -185,6 +185,9 @@
             data.forEach(function(item, i){
                 sleep(25)
                 var discord_id_string = data[i].discord_id_string
+                if (discord_id_string == "870487608105525298"){ 
+                    return
+                }
                 var json_ranking = data[i].ranking
                 var based_count = data[i].based_count
                 var table_row = document.createElement('li')
