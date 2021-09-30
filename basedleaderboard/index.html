@@ -143,7 +143,7 @@
         font-size: 1.1em;
         cursor: pointer;
     }
-    
+
     small::after {
         content: '';
         position: absolute;
@@ -195,8 +195,29 @@
         getID()
         //console.log(e.target)
         if (ids.includes(e.target.innerText)){
+            let html_ranking = ids.indexOf(e.target.innerText)
+
             console.log(e.target.previousSibling.innerText)
             console.log(ids.indexOf(e.target.innerText))
+
+            fetch('https://api.slatedev.xyz/api/basedbot/v1/globalbasedleaderboard').then(response => response.json()).then(json => {
+                var data = json.data
+
+                data.forEach(function(item, i){
+                    if (data[i].ranking == html_ranking + 2) {
+                        let discord_id_string = data[i].discord_id_string
+
+                        fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json()).then(new_json => {
+                            let title = new_json.data.based.based_title
+                            let time = new_json.data.based.last_based_at
+                            let spawn = new_json.created_at
+                            let settings = new_json.settings
+                            let badges = new_json.badges
+                            
+                        })
+                    }
+                })
+            })
         }
     }
 
