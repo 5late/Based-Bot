@@ -651,6 +651,14 @@ async def update(ctx):
                 "discord_name": user.name
             }
             write_json(discord_name, f'./data/{file}')
+        
+        elif not "avatar_url" in json_object:
+            file_count += 1
+            user = await bot.fetch_user(json_object['discord_id'])
+            discord_avatar = {
+                "avatar_url": user.avatar_url
+            }
+            write_json(discord_avatar, f'./data/{file}')
 
     await ctx.send(f'Updated {file_count} files with new data.')
 
