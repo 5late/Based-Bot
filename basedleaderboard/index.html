@@ -175,6 +175,30 @@
     function sleep (time) {
         return new Promise((resolve) => setTimeout(resolve, time));
     }
+
+    var lis = document.getElementById("nest").getElementsByTagName("small");
+
+    var ids = []
+
+    function getID(){
+        [].forEach.call(lis, function (child) {
+                if(child.innerText){
+                    ids.push(child.innerText)
+                    //console.log(child.innerText)
+                }
+                return ids
+        });
+    }
+    
+    window.onclick = e => {
+        getID()
+        //console.log(e.target)
+        if (ids.includes(e.target.innerText)){
+            console.log(e.target.previousSibling.innerText)
+            console.log(lis.)
+        }
+    }
+
     var leaderboard = document.getElementById('leaderboard')
     var nest = document.getElementById('nest')
     async function mainFunc(){
