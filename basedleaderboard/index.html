@@ -197,6 +197,15 @@
                 var based_count_data = document.createElement('small')
                 var ranking = document.createElement('td')
 
+                if (name == ""){
+                    fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json()).then(new_json => {
+                        name = new_json['discord_name']
+                        
+                        table_data.innerText = name
+                        table_row.appendChild(table_data)
+                    })
+                }
+
                 table_data.innerText = name
                 table_row.appendChild(table_data)
                 based_count_data.innerText = based_count
