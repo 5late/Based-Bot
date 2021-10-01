@@ -135,14 +135,14 @@ async def updateLeaderboard(id, count, boc):
     f.close()
 
 
-def updateLeaderboardWithID(id, boc):
+async def updateLeaderboardWithID(id, boc):
     with open(f'./data/{id}.json', 'r') as f:
         json_object = json.load(f)
 
         if json_object['data'][boc][f'{boc}_count'] < int(LEADERBOARD_BASE_COUNT):
             return
         
-        updateLeaderboard(id, json_object['data'][boc][f'{boc}_count'], boc)
+        await updateLeaderboard(id, json_object['data'][boc][f'{boc}_count'], boc)
 
 
 def updateServerCount(server_id):
@@ -205,10 +205,10 @@ async def on_message(message):
                             }
                     }
                     json.dump(data, f, indent=4)
-                updateLeaderboardWithID(member.id, 'based')
+                await updateLeaderboardWithID(member.id, 'based')
             
             elif checkFileExists(f'./data/{member.id}.json'):
-                updateLeaderboardWithID(member.id, 'based')
+                await updateLeaderboardWithID(member.id, 'based')
                 if member.id == message.author.id:
                     return
                 f = open(f'./data/{member.id}.json', 'r')
@@ -240,7 +240,7 @@ async def on_message(message):
                 f_bot = open(f'./data/870487608105525298.json', 'w')
                 json.dump(json_object, f_bot, indent=4)
                 f_bot.close()
-                updateLeaderboardWithID('870487608105525298', 'based')
+                await updateLeaderboardWithID('870487608105525298', 'based')
 
             print(member.id)
         
@@ -285,10 +285,10 @@ async def on_message(message):
                             }
                     }
                     json.dump(data, f, indent=4)
-                updateLeaderboardWithID(member.id, 'cringe')
+                await updateLeaderboardWithID(member.id, 'cringe')
             
             elif checkFileExists(f'./data/{member.id}.json'):
-                updateLeaderboardWithID(member.id, 'cringe')
+                await updateLeaderboardWithID(member.id, 'cringe')
                 if member.id == message.author.id:
                     return
                 f = open(f'./data/{member.id}.json', 'r')
