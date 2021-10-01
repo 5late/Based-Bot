@@ -92,13 +92,14 @@ def generateCringeTitle(count):
         return "The Most Cringe"
 
 async def updateLeaderboard(id, count, boc):
-    name = await bot.fetch_user(id).name
+    name = await bot.fetch_user(id)
+    print(str(name).split('#')[0])
     data = {
         "discord_id": id,
         "discord_id_string": str(id),
         f"{boc}_count": count,
         "ranking": 0,
-        "discord_name": name
+        "discord_name": str(name).split('#')[0]
     }
 
     f = open(f'./data/{boc}leaderboard.json', 'r')
