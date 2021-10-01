@@ -172,6 +172,20 @@
         height: 30em;
         justify-content: center;
         align-items: center;
+        background: #606ff2;
+        border-radius: 10px;
+    }
+
+    #avatar{
+        position: absolute;
+        top: 0em;
+        border-radius: 50%;
+    }
+    
+    #username{
+        position: absolute;
+        top: 5em;
+        font-family: 'Oswald';
     }
 </style>
 <body>
@@ -186,6 +200,7 @@
     <div id="modal">
         <h2 id="username"></h2>
         <img src="" alt="avatar" id="avatar">
+        <i class="far fa-lightbulb"></i>
         <p id="creation"></p>
     </div>
 </body>
@@ -240,7 +255,7 @@
 
                             username.innerText = name
                             avatar.src = `https://cdn.discordapp.com/avatars/${discord_id_string}/${avatar_url}`
-                            creation.innerText = new Date((Number(spawn) * 1000))
+                            creation.innerText = new Date((Number(spawn) * 1000)).toLocaleString()
 
                             let based_div = document.createElement('div')
                             let based_count = document.createElement('p')
