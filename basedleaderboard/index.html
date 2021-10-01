@@ -240,7 +240,7 @@
 
                             username.innerText = name
                             avatar.src = `https://cdn.discordapp.com/avatars/${discord_id_string}/${avatar_url}`
-                            creation.innerText = new Date(spawn * 1000)
+                            creation.innerText = new Date((Number(spawn) * 1000))
 
                             let based_div = document.createElement('div')
                             let based_count = document.createElement('p')
