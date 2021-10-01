@@ -95,7 +95,7 @@ async def updateLeaderboard(id, count, boc):
     name = await bot.fetch_user(id)
     print(str(name).split('#')[0])
     data = {
-        "discord_id": id,
+        "discord_id": int(id),
         "discord_id_string": str(id),
         f"{boc}_count": count,
         "ranking": 0,
@@ -107,7 +107,7 @@ async def updateLeaderboard(id, count, boc):
     f.close()
 
     for person in nested_json['data']:
-        if person['discord_id'] == id:
+        if person['discord_id_string'] == str(id):
             f = open(f'./data/{boc}leaderboard.json', 'w')    
             person[f'{boc}_count'] = count
             nested_json['data'] = sorted(nested_json['data'], key=lambda r: r[f'{boc}_count'], reverse=True)
@@ -115,6 +115,7 @@ async def updateLeaderboard(id, count, boc):
                 value['ranking'] = count
             json.dump(nested_json, f, indent=4)
             f.close()
+            print('success')
             return
     
 
