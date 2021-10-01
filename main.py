@@ -91,13 +91,13 @@ def generateCringeTitle(count):
     else:
         return "The Most Cringe"
 
-def updateLeaderboard(id, count, boc):
+async def updateLeaderboard(id, count, boc):
     data = {
         "discord_id": id,
         "discord_id_string": str(id),
         f"{boc}_count": count,
         "ranking": 0,
-        "discord_name": bot.fetch_user(id).name
+        "discord_name": await bot.fetch_user(id).name
     }
 
     f = open(f'./data/{boc}leaderboard.json', 'r')
