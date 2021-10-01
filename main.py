@@ -97,7 +97,7 @@ def updateLeaderboard(id, count, boc):
         "discord_id_string": str(id),
         f"{boc}_count": count,
         "ranking": 0,
-        "discord_name": bot.get_user(id).name
+        "discord_name": bot.fetch_user(id).name
     }
 
     f = open(f'./data/{boc}leaderboard.json', 'r')

@@ -163,6 +163,16 @@
     #nest{
         padding: 0px;
     }
+
+    #modal{
+        position: absolute;
+        display: none;
+        z-index: 2;
+        width: 35em;
+        height: 30em;
+        justify-content: center;
+        align-items: center;
+    }
 </style>
 <body>
     <div id='leaderboard'>
@@ -173,7 +183,7 @@
         <ol id='nest'>
         </ol>
     </div>
-    <div>
+    <div id="modal">
         <h2 id="username"></h2>
         <img src="" alt="avatar" id="avatar">
         <p id="creation"></p>
@@ -221,13 +231,16 @@
                             let spawn = new_json.created_at
                             let settings = new_json.settings
                             let badges = new_json.badges
-                            
+                            let avatar_url = new_json.avatar_url
+
                             let modal = document.getElementById('modal')
                             let username = document.getElementById('username')
                             let avatar = document.getElementById('avatar')
                             let creation = document.getElementById('creation')
 
                             username.innerText = name
+                            avatar.src = `https://cdn.discordapp.com/avatars/${discord_id_string}/${avatar_url}`
+                            creation.innerText = new Date(spawn * 1000)
 
                             let based_div = document.createElement('div')
                             let based_count = document.createElement('p')
@@ -242,6 +255,8 @@
                             let easly_adopter = document.createElement('p')
                             let developer = document.createElement('p')
                             let owner = document.createElement('p')
+
+                            modal.style.display = 'flex'
                         })
                     }
                 })
