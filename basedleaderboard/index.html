@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oswald">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alfa+Slab+One">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Patua+One">
     <script src="https://kit.fontawesome.com/1c2c2462bf.js" crossorigin="anonymous"></script>
 </head>
 <style>
@@ -229,14 +230,14 @@
     }
 
     #basedStats{
-        font-family: 'Alfa Slab One';
-        font-weight: 100;
+        font-family: 'Patua One';
+        font-weight: 800;
         color: #fff;
     }
 
     #cringeStats{
-        font-family: 'Alfa Slab One';
-        font-weight: 100;
+        font-family: 'Patua One';
+        font-weight: 800;
         color: #fff;
     }
 
@@ -248,19 +249,30 @@
     }
 
     #badgeDiv{
-        position: absolute;
-        top: 22em;
+        position: relative;
+        top: 10.75em;
         outline: solid #f39d64 2px;
         border-radius: 10px;
-        width: 35em;
-        height: 5em;
+        width: 31em;
+        height: 6em;
         text-align: center;
         font-family: 'Oswald';
     }
 
     .badgeIcon{
         position: relative;
-        width: 4em;
+        top: -2em;
+        max-width: 50%;
+        max-height: 50%;
+        vertical-align: middle;
+    }
+
+    #badges{
+        position: relative;
+        top: -1em;
+        font-family: 'Patua One';
+        color: #fff;
+        font-weight: 800;
     }
 </style>
 <body>
@@ -295,11 +307,11 @@
 
         <div id="badgeDiv">
             <h2 id="badges">Badges</h2>
-            <img src="" alt="" id="alphaTester" class="badgeIcon">
-            <img src="" alt="" id="earlyAdopter" class="badgeIcon">
-            <img src="" alt="" id="developer" class="badgeIcon">
-            <img src="" alt="" id="owner" class="badgeIcon">
-            <img src="" alt="" id="donator" class="badgeIcon">
+            <img src="" alt="Alpha Tester" id="alphaTester" class="badgeIcon" title="Alpha Tester" style="display: none;">
+            <img src="" alt="Early Adopter" id="earlyAdopter" class="badgeIcon" title="Early Adopter" style="display: none;">
+            <img src="" alt="Developer" id="developer" class="badgeIcon" title="Developer" style="display: none;">
+            <img src="" alt="Owner" id="owner" class="badgeIcon" title="Owner" style="display: none;">
+            <img src="" alt="Donator" id="donator" class="badgeIcon" title="Donator" style="display: none;">
         </div>
     </div>
 </body>
@@ -398,18 +410,23 @@
 
                             if (badges.alpha_tester) {
                                 alpha_tester.src = 'https://cdn.discordapp.com/emojis/876856567717331004.png'
+                                alpha_tester.style.display = 'inline'
                             }
                             if (badges.early_adopter) {
                                 early_adopter.src = 'https://cdn.discordapp.com/emojis/876856567536947281.png'
+                                early_adopter.style.display = 'inline'
                             }
                             if (badges.developer) {
                                 developer.src = 'https://cdn.discordapp.com/emojis/876856568996560937.png'
+                                developer.style.display = 'inline'
                             }
                             if (badges.owner) {
                                 owner.src = 'https://cdn.discordapp.com/emojis/876856567880896602.png'
+                                owner.style.display = 'inline'
                             }
                             if (badges.donator) {
                                 donator.src = 'https://cdn.discordapp.com/emojis/876856567859929188.png'
+                                donator.style.display = 'inline'
                             }
 
                             modal.style.display = 'flex'
