@@ -295,9 +295,7 @@
             var data = json.data
             console.log(data)
             let promises = []
-            data.forEach(function(item, i){
-                localStorage.removeItem(data[i].discord_id_string)
-                localStorage.setItem(data[i].discord_id_string, data[i].discord_name)
+            data.forEach(async function(item, i){
                 sleep(25)
                 var discord_id_string = data[i].discord_id_string
                 if (discord_id_string == "870487608105525298"){ 
@@ -313,7 +311,7 @@
                 var ranking = document.createElement('td')
 
                 if (name == ""){
-                    fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json()).then(new_json => {
+                    await fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json()).then(new_json => {
                         name = new_json['discord_name']
                         
                         table_data.innerText = name
@@ -327,6 +325,9 @@
                 table_row.appendChild(based_count_data)                
                 
                 nest.appendChild(table_row)
+
+                localStorage.removeItem(data[i].discord_id_string)
+                localStorage.setItem(data[i].discord_id_string, name)
             })
             
         })
