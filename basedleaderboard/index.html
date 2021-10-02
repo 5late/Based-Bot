@@ -208,7 +208,7 @@
     
     #basedDiv{
         position: absolute;
-        top: 11em;
+        top: 10em;
         left: 2em;
         outline: solid #64e9f3 2px;
         border-radius: 10px;
@@ -219,7 +219,7 @@
 
     #cringeDiv{
         position: absolute;
-        top: 11em;
+        top: 10em;
         right: 2em;
         outline: solid #f39d64 2px;
         border-radius: 10px;
@@ -245,6 +245,22 @@
         top: 1em;
         right: 1em;
         cursor: pointer;
+    }
+
+    #badgeDiv{
+        position: absolute;
+        top: 22em;
+        outline: solid #f39d64 2px;
+        border-radius: 10px;
+        width: 35em;
+        height: 5em;
+        text-align: center;
+        font-family: 'Oswald';
+    }
+
+    .badgeIcon{
+        position: relative;
+        width: 4em;
     }
 </style>
 <body>
@@ -275,6 +291,15 @@
             <p id="cringeCount"></p>
             <p id="cringeTitle"></p>
             <p id="lastCringe"></p>
+        </div>
+
+        <div id="badgeDiv">
+            <h2 id="badges">Badges</h2>
+            <img src="" alt="" id="alphaTester" class="badgeIcon">
+            <img src="" alt="" id="earlyAdopter" class="badgeIcon">
+            <img src="" alt="" id="developer" class="badgeIcon">
+            <img src="" alt="" id="owner" class="badgeIcon">
+            <img src="" alt="" id="donator" class="badgeIcon">
         </div>
     </div>
 </body>
@@ -364,11 +389,28 @@
                             cringe_title_p.innerText = "Cringe Title: " + cringe_title
                             cringe_time.innerText = "Last Cringed At: " + new Date(last_cringed_at * 1000).toLocaleString('en-US', {hour12: false, timeZone: 'UTC', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
 
-                            let show_badges = document.createElement('div')
-                            let alpha_tester = document.createElement('p')
-                            let easly_adopter = document.createElement('p')
-                            let developer = document.createElement('p')
-                            let owner = document.createElement('p')
+                            let show_badges = document.getElementById('badgesDiv')
+                            let alpha_tester = document.getElementById('alphaTester')
+                            let early_adopter = document.getElementById('earlyAdopter')
+                            let developer = document.getElementById('developer')
+                            let owner = document.getElementById('owner')
+                            let donator = document.getElementById('donator')
+
+                            if (badges.alpha_tester) {
+                                alpha_tester.src = 'https://cdn.discordapp.com/emojis/876856567717331004.png'
+                            }
+                            if (badges.early_adopter) {
+                                early_adopter.src = 'https://cdn.discordapp.com/emojis/876856567536947281.png'
+                            }
+                            if (badges.developer) {
+                                developer.src = 'https://cdn.discordapp.com/emojis/876856568996560937.png'
+                            }
+                            if (badges.owner) {
+                                owner.src = 'https://cdn.discordapp.com/emojis/876856567880896602.png'
+                            }
+                            if (badges.donator) {
+                                donator.src = 'https://cdn.discordapp.com/emojis/876856567859929188.png'
+                            }
 
                             modal.style.display = 'flex'
                         })
