@@ -161,6 +161,115 @@
     #nest{
         padding: 0px;
     }
+    #modal{
+        position: absolute;
+        display: none;
+        z-index: 2;
+        width: 35em;
+        height: 30em;
+        justify-content: center;
+        align-items: center;
+        background: #fa6855;
+        border-radius: 10px;
+    }
+
+    #avatar{
+        position: absolute;
+        top: 1.5em;
+        left: 2.5em;
+        border-radius: 50%;
+        width: 6em;
+    }
+    
+    #username{
+        position: absolute;
+        top: .75em;
+        font-family: 'Alfa Slab One';
+        font-size: 1.75em;
+        font-weight: 100;
+        color: #fff;
+    }
+
+    #creation{
+        position: absolute;
+        top: 5em;
+        font-family: 'Oswald';
+    }
+
+    #lightbulb{
+        position: absolute;
+        top: 4.9em;
+        left: 10em;
+        font-size: 1.25em;
+    }
+    
+    #basedDiv{
+        position: absolute;
+        top: 10em;
+        left: 2em;
+        outline: solid #64e9f3 2px;
+        border-radius: 10px;
+        width: 15em;
+        text-align: center;
+        font-family: 'Oswald';
+    }
+
+    #cringeDiv{
+        position: absolute;
+        top: 10em;
+        right: 2em;
+        outline: solid #f39d64 2px;
+        border-radius: 10px;
+        width: 15em;
+        text-align: center;
+        font-family: 'Oswald';
+    }
+
+    #basedStats{
+        font-family: 'Patua One';
+        font-weight: 800;
+        color: #fff;
+    }
+
+    #cringeStats{
+        font-family: 'Patua One';
+        font-weight: 800;
+        color: #fff;
+    }
+
+    #close{
+        position: absolute;
+        top: 1em;
+        right: 1em;
+        cursor: pointer;
+    }
+
+    #badgeDiv{
+        position: relative;
+        top: 10.75em;
+        outline: solid #FFD700 2px;
+        border-radius: 10px;
+        width: 31em;
+        height: 6em;
+        text-align: center;
+        font-family: 'Oswald';
+    }
+
+    .badgeIcon{
+        position: relative;
+        top: -2em;
+        max-width: 50%;
+        max-height: 50%;
+        vertical-align: middle;
+    }
+
+    #badges{
+        position: relative;
+        top: -1em;
+        font-family: 'Patua One';
+        color: #fff;
+        font-weight: 800;
+    }
 </style>
 <body>
     <div id='leaderboard'>
@@ -171,11 +280,160 @@
         <ol id='nest'>
         </ol>
     </div>
+    <div id="modal">
+        <i class="fas fa-times" id="close" onclick="CloseModal()"></i>
+        <h2 id="username"></h2>
+        <img src="" alt="avatar" id="avatar">
+        <i class="far fa-lightbulb" id="lightbulb" title="Based Profile Created"></i>
+        <p id="creation"></p>
+
+        <div id="basedDiv">
+            <h2 id="basedStats">Based Stats</h2>
+            <p id="basedCount"></p>
+            <p id="basedTitle"></p>
+            <p id="lastBased"></p>
+        </div>
+
+        <div id="cringeDiv">
+            <h2 id="cringeStats">Cringe Stats</h2>
+            <p id="cringeCount"></p>
+            <p id="cringeTitle"></p>
+            <p id="lastCringe"></p>
+        </div>
+
+        <div id="badgeDiv">
+            <h2 id="badges">Badges</h2>
+            <img src="" alt="Alpha Tester" id="alphaTester" class="badgeIcon" title="Alpha Tester" style="display: none;">
+            <img src="" alt="Early Adopter" id="earlyAdopter" class="badgeIcon" title="Early Adopter" style="display: none;">
+            <img src="" alt="Developer" id="developer" class="badgeIcon" title="Developer" style="display: none;">
+            <img src="" alt="Owner" id="owner" class="badgeIcon" title="Owner" style="display: none;">
+            <img src="" alt="Donator" id="donator" class="badgeIcon" title="Donator" style="display: none;">
+        </div>
+    </div>
 </body>
 <script>
+    function CloseModal(){
+        document.getElementById('modal').style.display = 'none'
+    }
     function sleep (time) {
         return new Promise((resolve) => setTimeout(resolve, time));
     }
+
+    var lis = document.getElementById("nest").getElementsByTagName("small");
+
+    var ids = []
+
+    function getID(){
+        [].forEach.call(lis, function (child) {
+                ids.push(child.innerText)
+                return ids
+        });
+    }
+    
+    window.onclick = e => {
+        getID()
+        //console.log(e.target)
+        if (ids.includes(e.target.innerText)){
+            let html_ranking = e.target.previousSibling.innerText
+
+            Object.keys(localStorage).forEach(function(item, i){
+                if (localStorage.getItem(item) == html_ranking){
+                    localStorage.removeItem('selected_user')
+                    localStorage.setItem('selected_user', item)
+                }
+            })
+            console.log(e.target.previousSibling.innerText)
+            console.log(ids.indexOf(e.target.innerText))
+            console.log(ids)
+
+            fetch('https://api.slatedev.xyz/api/basedbot/v1/globalcringeleaderboard').then(response => response.json()).then(json => {
+                var data = json.data
+
+                data.forEach(function(item, i){
+                    if (data[i].discord_id_string == localStorage.getItem('selected_user')) {
+                        let discord_id_string = data[i].discord_id_string
+
+                        fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json()).then(new_json => {
+                            let name = new_json.discord_name
+                            let spawn = new_json.created_at
+                            let avatar_url = new_json.avatar_url
+
+                            let based_title = new_json.data.based.based_title
+                            let last_based_at = new_json.data.based.last_based_at
+                            let based_count = new_json.data.based.based_count
+
+                            let cringe_title = new_json.data.cringe.cringe_title
+                            let last_cringed_at = new_json.data.cringe.last_cringed_at
+                            let cringe_count = new_json.data.cringe.cringe_count
+                            
+                            let settings = new_json.settings
+                            let badges = new_json.badges
+                            
+
+                            let modal = document.getElementById('modal')
+                            let username = document.getElementById('username')
+                            let avatar = document.getElementById('avatar')
+                            let creation = document.getElementById('creation')
+
+                            username.innerText = name
+                            avatar.src = `https://cdn.discordapp.com/avatars/${discord_id_string}/${avatar_url}`
+                            creation.innerText = new Date((Number(spawn) * 1000)).toLocaleString('en-US', {hour12: false, timeZone: 'UTC', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
+
+                            let based_div = document.getElementById('basedDiv')
+                            let based_count_p = document.getElementById('basedCount')
+                            let based_title_p = document.getElementById('basedTitle')
+                            let based_time = document.getElementById('lastBased')
+
+                            based_count_p.innerText = "Based Count: " + based_count
+                            based_title_p.innerText = "Based Title: " + based_title
+                            based_time.innerText = "Last Based At: " + new Date(last_based_at * 1000).toLocaleString('en-US', {hour12: false, timeZone: 'UTC', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
+
+                            let cringe_div = document.getElementById('cringeDiv')
+                            let cringe_count_p = document.getElementById('cringeCount')
+                            let cringe_title_p = document.getElementById('cringeTitle')
+                            let cringe_time = document.getElementById('lastCringe')
+
+                            cringe_count_p.innerText = "Cringe Count: " + cringe_count
+                            cringe_title_p.innerText = "Cringe Title: " + cringe_title
+                            cringe_time.innerText = "Last Cringed At: " + new Date(last_cringed_at * 1000).toLocaleString('en-US', {hour12: false, timeZone: 'UTC', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
+
+                            let show_badges = document.getElementById('badgesDiv')
+                            let alpha_tester = document.getElementById('alphaTester')
+                            let early_adopter = document.getElementById('earlyAdopter')
+                            let developer = document.getElementById('developer')
+                            let owner = document.getElementById('owner')
+                            let donator = document.getElementById('donator')
+
+                            if (badges.alpha_tester) {
+                                alpha_tester.src = 'https://cdn.discordapp.com/emojis/876856567717331004.png'
+                                alpha_tester.style.display = 'inline'
+                            }
+                            if (badges.early_adopter) {
+                                early_adopter.src = 'https://cdn.discordapp.com/emojis/876856567536947281.png'
+                                early_adopter.style.display = 'inline'
+                            }
+                            if (badges.developer) {
+                                developer.src = 'https://cdn.discordapp.com/emojis/876856568996560937.png'
+                                developer.style.display = 'inline'
+                            }
+                            if (badges.owner) {
+                                owner.src = 'https://cdn.discordapp.com/emojis/876856567880896602.png'
+                                owner.style.display = 'inline'
+                            }
+                            if (badges.donator) {
+                                donator.src = 'https://cdn.discordapp.com/emojis/876856567859929188.png'
+                                donator.style.display = 'inline'
+                            }
+
+                            modal.style.display = 'flex'
+                        })
+                        return
+                    }
+                })
+            })
+        }
+    }
+
     var leaderboard = document.getElementById('leaderboard')
     var nest = document.getElementById('nest')
     async function mainFunc(){
@@ -186,31 +444,36 @@
             data.forEach(function(item, i){
                 sleep(25)
                 var discord_id_string = data[i].discord_id_string
+                if (discord_id_string == "870487608105525298"){ 
+                    return
+                }
                 var json_ranking = data[i].ranking
-                var cringe_count = data[i].cringe_count
+                var based_count = data[i].cringe_count
+                var name = data[i].discord_name
                 var table_row = document.createElement('li')
                 table_row.className = 'row'
                 var table_data = document.createElement('mark')
-                var cringe_count_data = document.createElement('small')
+                var based_count_data = document.createElement('small')
                 var ranking = document.createElement('td')
 
-                try{
-                fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json().then(console.log(response.headers))).then(new_json => {
-                    console.log(new_json.discord_name)
-                    let name = new_json.discord_name
-                    
-                    table_data.innerText = name
-                    table_row.appendChild(table_data)
-                })
+                if (name == ""){
+                    fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json()).then(new_json => {
+                        name = new_json['discord_name']
+                        
+                        table_data.innerText = name
+                        table_row.appendChild(table_data)
+                    })
                 }
-                catch (e){
-                    console.log(e.message)
-                }
-                
-                cringe_count_data.innerText = cringe_count
-                table_row.appendChild(cringe_count_data)                
+
+                table_data.innerText = name
+                table_row.appendChild(table_data)
+                based_count_data.innerText = based_count
+                table_row.appendChild(based_count_data)                
                 
                 nest.appendChild(table_row)
+
+                localStorage.removeItem(data[i].discord_id_string)
+                localStorage.setItem(data[i].discord_id_string, name)
             })
             
         })
