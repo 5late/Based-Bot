@@ -110,7 +110,7 @@ async def updateLeaderboard(id, count, boc):
         if person['discord_id_string'] == str(id):
             f = open(f'./data/{boc}leaderboard.json', 'w')    
             person[f'{boc}_count'] = count
-            person['discord_name'] = name
+            person['discord_name'] = str(name).split('#')[0]
             nested_json['data'] = sorted(nested_json['data'], key=lambda r: r[f'{boc}_count'], reverse=True)
             for count, value in enumerate(nested_json['data']):
                 value['ranking'] = count
