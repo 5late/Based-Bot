@@ -445,6 +445,7 @@
         //console.log(e.target)
         if (ids.includes(e.target.innerText)){
             let html_ranking = e.target.previousSibling.innerText
+            console.log(html_ranking)
 
             Object.keys(localStorage).forEach(function(item, i){
                 if (localStorage.getItem(item) == html_ranking){
@@ -554,9 +555,6 @@
             data.forEach(function(item, i){
                 sleep(25)
                 var discord_id_string = data[i].discord_id_string
-                if (discord_id_string == "870487608105525298"){ 
-                    return
-                }
                 var json_ranking = data[i].ranking
                 var based_count = data[i].cringe_count
                 var name = data[i].discord_name
