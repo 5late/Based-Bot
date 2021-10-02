@@ -178,7 +178,7 @@
 
     #avatar{
         position: absolute;
-        top: 1em;
+        top: 1.5em;
         left: 2.5em;
         border-radius: 50%;
         width: 6em;
@@ -202,6 +202,22 @@
         left: 9.25em;
         font-size: 1.25em;
     }
+    
+    #basedDiv{
+        position: absolute;
+        top: 11em;
+        left: 2.5em;
+        outline: solid #64e9f3 2px;
+        border-radius: 10px;
+    }
+
+    #cringeDiv{
+        position: absolute;
+        top: 11em;
+        right: 2.5em;
+        outline: solid #f39d64 2px;
+        border-radius: 10px;
+    }
 </style>
 <body>
     <div id='leaderboard'>
@@ -215,8 +231,20 @@
     <div id="modal">
         <h2 id="username"></h2>
         <img src="" alt="avatar" id="avatar">
-        <i class="far fa-lightbulb" id="lightbulb"></i>
+        <i class="far fa-lightbulb" id="lightbulb" title="Based Profile Created"></i>
         <p id="creation"></p>
+
+        <div id="basedDiv">
+            <h2 id="basedTitle">Based Stats</h2>
+            <p id="basedCount"></p>
+            <p id="lastBased"></p>
+        </div>
+
+        <div id="cringeDiv">
+            <h2 id="cringeTitle">Cringe Stats</h2>
+            <p id="cringeCount"></p>
+            <p id="lastCringe"></p>
+        </div>
     </div>
 </body>
 <script>
@@ -259,13 +287,21 @@
                         let discord_id_string = data[i].discord_id_string
 
                         fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json()).then(new_json => {
-                            let title = new_json.data.based.based_title
                             let name = new_json.discord_name
-                            let time = new_json.data.based.last_based_at
                             let spawn = new_json.created_at
+                            let avatar_url = new_json.avatar_url
+
+                            let based_title = new_json.data.based.based_title
+                            let last_based_at = new_json.data.based.last_based_at
+                            let based_count = new_json.data.based.based_count
+
+                            let cringe_title = new_json.data.cringe.cringe_title
+                            let last_cringed_at = new_json.data.cringe.last_cringed_at
+                            let cringe_count = new_json.data.cringe.cringe_count
+                            
                             let settings = new_json.settings
                             let badges = new_json.badges
-                            let avatar_url = new_json.avatar_url
+                            
 
                             let modal = document.getElementById('modal')
                             let username = document.getElementById('username')
@@ -276,13 +312,13 @@
                             avatar.src = `https://cdn.discordapp.com/avatars/${discord_id_string}/${avatar_url}`
                             creation.innerText = new Date((Number(spawn) * 1000)).toLocaleString()
 
-                            let based_div = document.createElement('div')
-                            let based_count = document.createElement('p')
-                            let based_time = document.createElement('p')
+                            let based_div = document.getElementById('basedDiv')
+                            let based_count = document.getElementById('basedCount')
+                            let based_time = document.getElementById('lastBased')
 
-                            let cringe_div = document.createElement('div')
-                            let cringe_count = document.createElement('p')
-                            let cringe_time = document.createElement('p')
+                            let cringe_div = document.getElementById('cringeDiv')
+                            let cringe_count = document.getElementById('cringeCount')
+                            let cringe_time = document.getElementById('lastCringe')
 
                             let show_badges = document.createElement('div')
                             let alpha_tester = document.createElement('p')
