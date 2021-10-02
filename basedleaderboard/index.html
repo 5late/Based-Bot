@@ -196,12 +196,13 @@
     #creation{
         position: absolute;
         top: 5em;
+        font-family: 'Oswald';
     }
 
     #lightbulb{
         position: absolute;
-        top: 4.75em;
-        left: 9.25em;
+        top: 4.9em;
+        left: 10em;
         font-size: 1.25em;
     }
     
@@ -332,25 +333,25 @@
 
                             username.innerText = name
                             avatar.src = `https://cdn.discordapp.com/avatars/${discord_id_string}/${avatar_url}`
-                            creation.innerText = new Date((Number(spawn) * 1000)).toLocaleString()
+                            creation.innerText = new Date((Number(spawn) * 1000)).toLocaleString('en-US', {hour12: false, timeZone: 'UTC', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
 
                             let based_div = document.getElementById('basedDiv')
                             let based_count_p = document.getElementById('basedCount')
                             let based_title_p = document.getElementById('basedTitle')
                             let based_time = document.getElementById('lastBased')
 
-                            based_count_p.innerText = based_count
-                            based_title_p.innerText = based_title
-                            based_time.innerText = last_based_at
+                            based_count_p.innerText = "Based Count: " + based_count
+                            based_title_p.innerText = "Based Title: " + based_title
+                            based_time.innerText = "Last Based At: " + new Date(last_based_at * 1000).toLocaleString('en-US', {hour12: false, timeZone: 'UTC', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
 
                             let cringe_div = document.getElementById('cringeDiv')
                             let cringe_count_p = document.getElementById('cringeCount')
                             let cringe_title_p = document.getElementById('cringeTitle')
                             let cringe_time = document.getElementById('lastCringe')
 
-                            cringe_count_p.innerText = cringe_count
-                            cringe_title_p.innerText = cringe_title
-                            cringe_time.innerText = last_cringed_at
+                            cringe_count_p.innerText = "Cringe Count: " + cringe_count
+                            cringe_title_p.innerText = "Cringe Title: " + cringe_title
+                            cringe_time.innerText = "Last Cringed At: " + new Date(last_cringed_at * 1000).toLocaleString('en-US', {hour12: false, timeZone: 'UTC', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
 
                             let show_badges = document.createElement('div')
                             let alpha_tester = document.createElement('p')
