@@ -228,6 +228,7 @@ async def on_message(message):
                 json_object['data']['based']['last_based_at'] = getTicks()
                 json_object['data']['based']['last_based_by'] = message.author.id
                 json_object['avatar'] = await bot.fetch_user(member.id).avatar
+                json_object['discord_name'] = str(await bot.fetch_user(member.id).name).split('#')[0]
 
                 f = open(f'./data/{member.id}.json', 'w')
                 json.dump(json_object, f, indent=4)
@@ -311,6 +312,7 @@ async def on_message(message):
                 json_object['data']['cringe']['last_cringed_at'] = getTicks()
                 json_object['data']['cringe']['last_cringed_by'] = message.author.id
                 json_object['avatar'] = await bot.fetch_user(member.id).avatar
+                json_object['discord_name'] = str(await bot.fetch_user(member.id).name).split('#')[0]
 
                 f = open(f'./data/{member.id}.json', 'w')
                 json.dump(json_object, f, indent=4)
