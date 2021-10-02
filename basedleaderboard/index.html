@@ -187,8 +187,10 @@
     #username{
         position: absolute;
         top: .75em;
-        font-family: 'Oswald';
+        font-family: 'Alfa Slab One';
         font-size: 1.75em;
+        font-weight: 100;
+        color: #fff;
     }
 
     #creation{
@@ -206,17 +208,35 @@
     #basedDiv{
         position: absolute;
         top: 11em;
-        left: 2.5em;
+        left: 2em;
         outline: solid #64e9f3 2px;
         border-radius: 10px;
+        width: 15em;
+        text-align: center;
+        font-family: 'Oswald';
     }
 
     #cringeDiv{
         position: absolute;
         top: 11em;
-        right: 2.5em;
+        right: 2em;
         outline: solid #f39d64 2px;
         border-radius: 10px;
+        width: 15em;
+        text-align: center;
+        font-family: 'Oswald';
+    }
+
+    #basedStats{
+        font-family: 'Alfa Slab One';
+        font-weight: 100;
+        color: #fff;
+    }
+
+    #cringeStats{
+        font-family: 'Alfa Slab One';
+        font-weight: 100;
+        color: #fff;
     }
 </style>
 <body>
@@ -235,14 +255,16 @@
         <p id="creation"></p>
 
         <div id="basedDiv">
-            <h2 id="basedTitle">Based Stats</h2>
+            <h2 id="basedStats">Based Stats</h2>
             <p id="basedCount"></p>
+            <p id="basedTitle"></p>
             <p id="lastBased"></p>
         </div>
 
         <div id="cringeDiv">
-            <h2 id="cringeTitle">Cringe Stats</h2>
+            <h2 id="cringeStats">Cringe Stats</h2>
             <p id="cringeCount"></p>
+            <p id="cringeTitle"></p>
             <p id="lastCringe"></p>
         </div>
     </div>
@@ -313,12 +335,22 @@
                             creation.innerText = new Date((Number(spawn) * 1000)).toLocaleString()
 
                             let based_div = document.getElementById('basedDiv')
-                            let based_count = document.getElementById('basedCount')
+                            let based_count_p = document.getElementById('basedCount')
+                            let based_title_p = document.getElementById('basedTitle')
                             let based_time = document.getElementById('lastBased')
 
+                            based_count_p.innerText = based_count
+                            based_title_p.innerText = based_title
+                            based_time.innerText = last_based_at
+
                             let cringe_div = document.getElementById('cringeDiv')
-                            let cringe_count = document.getElementById('cringeCount')
+                            let cringe_count_p = document.getElementById('cringeCount')
+                            let cringe_title_p = document.getElementById('cringeTitle')
                             let cringe_time = document.getElementById('lastCringe')
+
+                            cringe_count_p.innerText = cringe_count
+                            cringe_title_p.innerText = cringe_title
+                            cringe_time.innerText = last_cringed_at
 
                             let show_badges = document.createElement('div')
                             let alpha_tester = document.createElement('p')
