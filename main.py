@@ -179,7 +179,7 @@ async def on_message(message):
                     data = {
                         "discord_id": member.id,
                         "discord_name": member.name,
-                        "avatar": await bot.fetch_user(member.id).avatar,
+                        "avatar_url": await bot.fetch_user(member.id).avatar,
                         "server_id": message.guild.id,
                         "created_at": getTicks(),
                             "data": {
@@ -227,7 +227,7 @@ async def on_message(message):
                 json_object['data']['based']['based_title'] = generateBasedTitle(json_object['data']['based']['based_count'])
                 json_object['data']['based']['last_based_at'] = getTicks()
                 json_object['data']['based']['last_based_by'] = message.author.id
-                json_object['avatar'] = (await bot.fetch_user(member.id)).avatar
+                json_object['avatar_url'] = (await bot.fetch_user(member.id)).avatar
                 json_object['discord_name'] = str((await bot.fetch_user(member.id)).name).split('#')[0]
 
                 f = open(f'./data/{member.id}.json', 'w')
@@ -263,7 +263,7 @@ async def on_message(message):
                     data = {
                         "discord_id": member.id,
                         "discord_name": member.name,
-                        "avatar": await bot.fetch_user(member.id).avatar,
+                        "avatar_url": await bot.fetch_user(member.id).avatar,
                         "server_id": message.guild.id,
                         "created_at": getTicks(),
                             "data": {
@@ -311,7 +311,7 @@ async def on_message(message):
                 json_object['data']['cringe']['cringe_title'] = generateCringeTitle(json_object['data']['cringe']['cringe_count'])
                 json_object['data']['cringe']['last_cringed_at'] = getTicks()
                 json_object['data']['cringe']['last_cringed_by'] = message.author.id
-                json_object['avatar'] = (await bot.fetch_user(member.id)).avatar
+                json_object['avatar_url'] = (await bot.fetch_user(member.id)).avatar
                 json_object['discord_name'] = str((await bot.fetch_user(member.id)).name).split('#')[0]
 
                 f = open(f'./data/{member.id}.json', 'w')
