@@ -306,7 +306,7 @@
             var data = json.data
             console.log(data)
             let promises = []
-            data.forEach(async function(item, i){
+            data.forEach(function(item, i){
                 sleep(25)
                 var discord_id_string = data[i].discord_id_string
                 if (discord_id_string == "870487608105525298"){ 
@@ -322,7 +322,7 @@
                 var ranking = document.createElement('td')
 
                 if (name == ""){
-                    await fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json()).then(new_json => {
+                    fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json()).then(new_json => {
                         name = new_json['discord_name']
                         
                         table_data.innerText = name
