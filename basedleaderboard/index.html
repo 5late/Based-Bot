@@ -239,6 +239,13 @@
         font-weight: 100;
         color: #fff;
     }
+
+    #close{
+        position: absolute;
+        top: 1em;
+        right: 1em;
+        cursor: pointer;
+    }
 </style>
 <body>
     <div id='leaderboard'>
@@ -250,6 +257,7 @@
         </ol>
     </div>
     <div id="modal">
+        <i class="fas fa-times" id="close" onclick="CloseModal()"></i>
         <h2 id="username"></h2>
         <img src="" alt="avatar" id="avatar">
         <i class="far fa-lightbulb" id="lightbulb" title="Based Profile Created"></i>
@@ -271,6 +279,9 @@
     </div>
 </body>
 <script>
+    function CloseModal(){
+        document.getElementById('modal').style.display = 'none'
+    }
     function sleep (time) {
         return new Promise((resolve) => setTimeout(resolve, time));
     }
