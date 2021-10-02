@@ -178,14 +178,18 @@
 
     #avatar{
         position: absolute;
-        top: 0em;
+        top: 1em;
+        left: 3em;
         border-radius: 50%;
+        width: 6em;
     }
     
     #username{
         position: absolute;
-        top: 5em;
+        top: .75em;
+        left: 6em;
         font-family: 'Oswald';
+        font-size: 1.75em;
     }
 </style>
 <body>
@@ -215,10 +219,7 @@
 
     function getID(){
         [].forEach.call(lis, function (child) {
-                if(child.innerText){
-                    ids.push(child.innerText)
-                    //console.log(child.innerText)
-                }
+                ids.push(child.innerText)
                 return ids
         });
     }
@@ -227,16 +228,23 @@
         getID()
         //console.log(e.target)
         if (ids.includes(e.target.innerText)){
-            let html_ranking = ids.indexOf(e.target.innerText)
+            let html_ranking = e.target.previousSibling.innerText
 
+            Object.keys(localStorage).forEach(function(item, i){
+                if (localStorage.getItem(item) == html_ranking){
+                    localStorage.removeItem('selected_user')
+                    localStorage.setItem('selected_user', item)
+                }
+            })
             console.log(e.target.previousSibling.innerText)
             console.log(ids.indexOf(e.target.innerText))
+            console.log(ids)
 
             fetch('https://api.slatedev.xyz/api/basedbot/v1/globalbasedleaderboard').then(response => response.json()).then(json => {
                 var data = json.data
 
                 data.forEach(function(item, i){
-                    if (data[i].ranking == html_ranking + 2) {
+                    if (data[i].discord_id_string == localStorage.getItem('selected_user')) {
                         let discord_id_string = data[i].discord_id_string
 
                         fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json()).then(new_json => {
@@ -273,6 +281,7 @@
 
                             modal.style.display = 'flex'
                         })
+                        return
                     }
                 })
             })
@@ -287,6 +296,8 @@
             console.log(data)
             let promises = []
             data.forEach(function(item, i){
+                localStorage.removeItem(data[i].discord_id_string)
+                localStorage.setItem(data[i].discord_id_string, data[i].discord_name)
                 sleep(25)
                 var discord_id_string = data[i].discord_id_string
                 if (discord_id_string == "870487608105525298"){ 
