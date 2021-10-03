@@ -491,24 +491,24 @@ async def mybasedcount(ctx):
         if not json_object['data']['based']['based_count'] < 50:
             json_object['badges']['50_based_count'] = True
             if json_object['badges']['50_based_count'] == True:
-                badges += '<:bronze_based:894266025888063548>'
+                badges += '<:bronze_based:894270671482388530>'
         if not json_object['data']['based']['based_count'] < 100:
             json_object['badges']['50_based_count'] = True
             if json_object['badges']['100_based_count'] == True:
-                badges += '<:silver_based:894266026685001748>'
+                badges += '<:silver_based:894270672367419423>'
         if not json_object['data']['based']['based_count'] < 200:
             json_object['badges']['50_based_count'] = True
             if json_object['badges']['200_based_count'] == True:
-                badges += '<:gold_based:894266026659811378>'
+                badges += '<:gold_based:894270672073793618>'
         if not json_object['data']['cringe']['cringe_count'] < 50:
             json_object['badges']['50_cringe_count'] = True
-            badges += '<:bronze_cringe:894266026387202089>'
+            badges += '<:bronze_cringe:894270672543563816>'
         if not json_object['data']['cringe']['cringe_count'] < 100:
             json_object['badges']['100_cringe_count'] = True
-            badges += '<:silver_cringe:894266026705961010>'
+            badges += '<:silver_cringe:894270672321253396>'
         if not json_object['data']['cringe']['cringe_count'] < 200:
             json_object['badges']['200_cringe_count'] = True
-            badges += '<:gold_cringe:894266026252980266>'
+            badges += '<:gold_cringe:894270672333844510>'
         
 
         based_count = json_object['data']['based']['based_count']
@@ -580,24 +580,24 @@ async def basedcount(ctx, person:discord.Member=''):
         if not json_object['data']['based']['based_count'] < 50:
             json_object['badges']['50_based_count'] = True
             if json_object['badges']['50_based_count'] == True:
-                badges += '<:bronze_based:894266025888063548>'
+                badges += '<:bronze_based:894270671482388530>'
         if not json_object['data']['based']['based_count'] < 100:
             json_object['badges']['50_based_count'] = True
             if json_object['badges']['100_based_count'] == True:
-                badges += '<:silver_based:894266026685001748>'
+                badges += '<:silver_based:894270672367419423>'
         if not json_object['data']['based']['based_count'] < 200:
             json_object['badges']['50_based_count'] = True
             if json_object['badges']['200_based_count'] == True:
-                badges += '<:gold_based:894266026659811378>'
+                badges += '<:gold_based:894270672073793618>'
         if not json_object['data']['cringe']['cringe_count'] < 50:
             json_object['badges']['50_cringe_count'] = True
-            badges += '<:bronze_cringe:894266026387202089>'
+            badges += '<:bronze_cringe:894270672543563816>'
         if not json_object['data']['cringe']['cringe_count'] < 100:
             json_object['badges']['100_cringe_count'] = True
-            badges += '<:silver_cringe:894266026705961010>'
+            badges += '<:silver_cringe:894270672321253396>'
         if not json_object['data']['cringe']['cringe_count'] < 200:
             json_object['badges']['200_cringe_count'] = True
-            badges += '<:gold_cringe:894266026252980266>'
+            badges += '<:gold_cringe:894270672333844510>'
 
         based_count = json_object['data']['based']['based_count']
         based_title = json_object['data']['based']['based_title']
