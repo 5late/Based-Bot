@@ -205,7 +205,13 @@ async def on_message(message):
                                 "early_adopter": True,
                                 "developer": False,
                                 "owner": False,
-                                "donator": False
+                                "donator": False,
+                                "200_based_count": False,
+                                "200_cringe_count": False,
+                                "100_based_count" : False,
+                                "100_cringe_count": False,
+                                "50_based_count": False,
+                                "50_cringe_count": False
                             }
                     }
                     json.dump(data, f, indent=4)
@@ -229,6 +235,13 @@ async def on_message(message):
                 json_object['data']['based']['last_based_by'] = message.author.id
                 json_object['avatar_url'] = (await bot.fetch_user(member.id)).avatar
                 json_object['discord_name'] = str((await bot.fetch_user(member.id)).name).split('#')[0]
+
+                if json_object['data']['based']['based_count'] >= 50:
+                    json_object['badges']['50_based_count'] = True
+                elif json_object['data']['based']['based_count'] >= 100:
+                    json_object['badges']['100_based_count'] = True
+                elif json_object['data']['based']['based_count'] >= 200:
+                    json_object['badges']['200_based_count'] = True
 
                 f = open(f'./data/{member.id}.json', 'w')
                 json.dump(json_object, f, indent=4)
@@ -289,7 +302,13 @@ async def on_message(message):
                                 "early_adopter": True,
                                 "developer": False,
                                 "owner": False,
-                                "donator": False
+                                "donator": False,
+                                "200_based_count": False,
+                                "200_cringe_count": False,
+                                "100_based_count" : False,
+                                "100_cringe_count": False,
+                                "50_based_count": False,
+                                "50_cringe_count": False
                             }
                     }
                     json.dump(data, f, indent=4)
@@ -313,6 +332,13 @@ async def on_message(message):
                 json_object['data']['cringe']['last_cringed_by'] = message.author.id
                 json_object['avatar_url'] = (await bot.fetch_user(member.id)).avatar
                 json_object['discord_name'] = str((await bot.fetch_user(member.id)).name).split('#')[0]
+
+                if json_object['data']['cringe']['cringe_count'] >= 50:
+                    json_object['badges']['50_cringe_count'] = True
+                elif json_object['data']['cringe']['cringe_count'] >= 100:
+                    json_object['badges']['100_cringe_count'] = True
+                elif json_object['data']['cringe']['cringe_count'] >= 200:
+                    json_object['badges']['200_cringe_count'] = True
 
                 f = open(f'./data/{member.id}.json', 'w')
                 json.dump(json_object, f, indent=4)
