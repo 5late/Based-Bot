@@ -488,6 +488,19 @@ async def mybasedcount(ctx):
             badges += '<:developer:876856568996560937>'
         if json_object['badges']['donator'] == True:
             badges += '<:donator:876856567859929188>'
+        if json_object['badges']['50_based_count'] == True:
+            badges += '<:bronze_based:894266025888063548>'
+        if json_object['badges']['100_based_count'] == True:
+            badges += '<:silver_based:894266026685001748>'
+        if json_object['badges']['200_based_count'] == True:
+            badges += '<:gold_based:894266026659811378>'
+        if json_object['badges']['50_cringe_count'] == True:
+            badges += '<:bronze_cringe:894266026387202089>'
+        if json_object['badges']['100_cringe_count'] == True:
+            badges += '<:silver_cringe:894266026705961010>'
+        if json_object['badges']['200_cringe_count'] == True:
+            badges += '<:gold_cringe:894266026252980266>'
+        
 
         based_count = json_object['data']['based']['based_count']
         based_title = json_object['data']['based']['based_title']
@@ -555,6 +568,18 @@ async def basedcount(ctx, person:discord.Member=''):
             badges += '<:developer:876856568996560937>'
         if json_object['badges']['donator'] == True:
             badges += '<:donator:876856567859929188>'
+        if json_object['badges']['50_based_count'] == True:
+            badges += '<:bronze_based:894266025888063548>'
+        if json_object['badges']['100_based_count'] == True:
+            badges += '<:silver_based:894266026685001748>'
+        if json_object['badges']['200_based_count'] == True:
+            badges += '<:gold_based:894266026659811378>'
+        if json_object['badges']['50_cringe_count'] == True:
+            badges += '<:bronze_cringe:894266026387202089>'
+        if json_object['badges']['100_cringe_count'] == True:
+            badges += '<:silver_cringe:894266026705961010>'
+        if json_object['badges']['200_cringe_count'] == True:
+            badges += '<:gold_cringe:894266026252980266>'
 
         based_count = json_object['data']['based']['based_count']
         based_title = json_object['data']['based']['based_title']
