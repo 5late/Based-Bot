@@ -532,6 +532,10 @@ async def mybasedcount(ctx):
         last_based_at = datetime.utcfromtimestamp(last_based_at).strftime("%a %b %d %Y | %H:%M")
         last_cringed_at = datetime.utcfromtimestamp(last_cringed_at).strftime("%a %b %d %Y | %H:%M")
 
+        f = open(f'./data/{ctx.author.id}.json', 'w')
+        json.dump(json_object, f, indent=4)
+        f.close()
+
         
         embed = discord.Embed(title=f'Based Count for {ctx.author.name}', description = 'Based and Based-Bot pilled.', color=color)
         embed.add_field(name='Badges', value=badges, inline=False)
@@ -616,6 +620,10 @@ async def basedcount(ctx, person:discord.Member=''):
 
         last_based_at = datetime.utcfromtimestamp(last_based_at).strftime("%a %b %d %Y | %H:%M")
         last_cringed_at = datetime.utcfromtimestamp(last_cringed_at).strftime("%a %b %d %Y | %H:%M")
+
+        f = open(f'./data/{person.id}.json', 'w')
+        json.dump(json_object, f, indent=4)
+        f.close()
 
         
         embed = discord.Embed(title=f'Based Count for {person.name}', description = 'Based and Based-Bot pilled.', color=color)
