@@ -514,6 +514,12 @@
                             let developer = document.getElementById('developer')
                             let owner = document.getElementById('owner')
                             let donator = document.getElementById('donator')
+                            let fifty_based_count = document.getElementById('50_based_count')
+                            let hundred_based_count = document.getElementById('100_based_count')
+                            let two_hundred_based_count = document.getElementById('200_based_count')
+                            let fifty_cringe_count = document.getElementById('50_cringe_count')
+                            let hundred_cringe_count = document.getElementById('100_cringe_count')
+                            let two_hundred_cringe_count = document.getElementById('200_cringe_count')
 
                             if (badges.alpha_tester) {
                                 alpha_tester.src = 'https://cdn.discordapp.com/emojis/876856567717331004.png'
@@ -534,6 +540,30 @@
                             if (badges.donator) {
                                 donator.src = 'https://cdn.discordapp.com/emojis/876856567859929188.png'
                                 donator.style.display = 'inline'
+                            }
+                            if (badges['50_based_count']) {
+                                fifty_based_count.src = 'https://cdn.discordapp.com/emojis/894270671482388530.png'
+                                fifty_based_count.style.display = 'inline'
+                            }
+                            if (badges['100_based_count']) {
+                                hundred_based_count.src = 'https://cdn.discordapp.com/emojis/894270672367419423.png'
+                                hundred_based_count.style.display = 'inline'
+                            }
+                            if (badges['200_based_count']) {
+                                two_hundred_based_count.src = 'https://cdn.discordapp.com/emojis/894270672073793618.png'
+                                two_hundred_based_count.style.display = 'inline'
+                            }
+                            if (badges['50_cringe_count']) {
+                                fifty_cringe_count.src = 'https://cdn.discordapp.com/emojis/894270672543563816.png'
+                                fifty_cringe_count.style.display = 'inline'
+                            }
+                            if (badges['100_cringe_count']) {
+                                hundred_cringe_count.src = 'https://cdn.discordapp.com/emojis/894270672321253396.png'
+                                hundred_cringe_count.style.display = 'inline'
+                            }
+                            if (badges['200_cringe_count']) {
+                                two_hundred_cringe_count.src = 'https://cdn.discordapp.com/emojis/894270672333844510.png'
+                                two_hundred_cringe_count.style.display = 'inline'
                             }
 
                             modal.style.display = 'flex'
