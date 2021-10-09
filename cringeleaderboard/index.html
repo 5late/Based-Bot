@@ -503,7 +503,7 @@
 
                             based_count_p.innerText = "Based Count: " + based_count
                             based_title_p.innerText = "Based Title: " + based_title
-                            based_time.innerText = "Last Based At: " + new Date(last_based_at * 1000).toLocaleString('en-US', {hour12: false, timeZone: 'UTC', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
+                            based_time.innerText = "Last Based At: " + new Date(last_based_at * 1000).toLocaleString('en-US', {hour12: false, year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
 
                             let cringe_div = document.getElementById('cringeDiv')
                             let cringe_count_p = document.getElementById('cringeCount')
@@ -512,7 +512,7 @@
 
                             cringe_count_p.innerText = "Cringe Count: " + cringe_count
                             cringe_title_p.innerText = "Cringe Title: " + cringe_title
-                            cringe_time.innerText = "Last Cringed At: " + new Date(last_cringed_at * 1000).toLocaleString('en-US', {hour12: false, timeZone: 'UTC', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
+                            cringe_time.innerText = "Last Cringed At: " + new Date(last_cringed_at * 1000).toLocaleString('en-US', {hour12: false, year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
 
                             let show_badges = document.getElementById('badgesDiv')
                             let alpha_tester = document.getElementById('alphaTester')

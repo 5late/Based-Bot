@@ -498,7 +498,7 @@
 
                             username.innerText = name
                             avatar.src = `https://cdn.discordapp.com/avatars/${discord_id_string}/${avatar_url}`
-                            creation.innerText = new Date((Number(spawn) * 1000)).toLocaleString('en-US', {hour12: false, timeZone: 'UTC', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
+                            creation.innerText = new Date((Number(spawn) * 1000)).toLocaleString('en-US', {hour12: false, year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
 
                             let based_div = document.getElementById('basedDiv')
                             let based_count_p = document.getElementById('basedCount')
@@ -507,7 +507,7 @@
 
                             based_count_p.innerText = "Based Count: " + based_count
                             based_title_p.innerText = "Based Title: " + based_title
-                            based_time.innerText = "Last Based At: " + new Date(last_based_at * 1000).toLocaleString('en-US', {hour12: false, timeZone: 'UTC', year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
+                            based_time.innerText = "Last Based At: " + new Date(last_based_at * 1000).toLocaleString('en-US', {hour12: false, year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
 
                             let cringe_div = document.getElementById('cringeDiv')
                             let cringe_count_p = document.getElementById('cringeCount')
