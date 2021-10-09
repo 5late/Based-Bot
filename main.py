@@ -529,8 +529,8 @@ async def mybasedcount(ctx):
             thumbnail = discord.File('./imgs/cringe.png', 'thumbnail.png')
             color = 0xad1313
 
-        last_based_at = datetime.utcfromtimestamp(last_based_at).strftime("%a %b %d %Y | %H:%M")
-        last_cringed_at = datetime.utcfromtimestamp(last_cringed_at).strftime("%a %b %d %Y | %H:%M")
+        last_based_at = f'<t:{last_based_at}:R>'
+        last_cringed_at = f'<t:{last_cringed_at}:R>'
 
         f = open(f'./data/{ctx.author.id}.json', 'w')
         json.dump(json_object, f, indent=4)
@@ -541,10 +541,10 @@ async def mybasedcount(ctx):
         embed.add_field(name='Badges', value=badges, inline=False)
         embed.add_field(name='Based Count', value=based_count)
         embed.add_field(name='Based Title', value=based_title)
-        embed.add_field(name='Last Based Count', value=f'{last_based_at} **UTC**')
+        embed.add_field(name='Last Based Count', value=f'{last_based_at}')
         embed.add_field(name='Cringe Count', value=cringe_count)
         embed.add_field(name='Cringe Title', value=cringe_title)
-        embed.add_field(name='Last Cringed Count', value=f'{last_cringed_at} **UTC**')
+        embed.add_field(name='Last Cringed Count', value=f'{last_cringed_at}')
         embed.add_field(name='Based to Cringe Ratio', value=f'``{decimal}``')
         embed.set_thumbnail(url='attachment://thumbnail.png')
         
@@ -618,8 +618,8 @@ async def basedcount(ctx, person:discord.Member=''):
             thumbnail = discord.File('./imgs/cringe.png', 'thumbnail.png')
             color = 0xad1313
 
-        last_based_at = datetime.utcfromtimestamp(last_based_at).strftime("%a %b %d %Y | %H:%M")
-        last_cringed_at = datetime.utcfromtimestamp(last_cringed_at).strftime("%a %b %d %Y | %H:%M")
+        last_based_at = f'<t:{last_based_at}:R>'
+        last_cringed_at = f'<t:{last_cringed_at}:R>'
 
         f = open(f'./data/{person.id}.json', 'w')
         json.dump(json_object, f, indent=4)
@@ -630,10 +630,10 @@ async def basedcount(ctx, person:discord.Member=''):
         embed.add_field(name='Badges', value=badges, inline=False)
         embed.add_field(name='Based Count', value=based_count)
         embed.add_field(name='Based Title', value=based_title)
-        embed.add_field(name='Last Based Count', value=f'{last_based_at} **UTC**')
+        embed.add_field(name='Last Based Count', value=f'{last_based_at}')
         embed.add_field(name='Cringe Count', value=cringe_count)
         embed.add_field(name='Cringe Title', value=cringe_title)
-        embed.add_field(name='Last Cringed Count', value=f'{last_cringed_at} **UTC**')
+        embed.add_field(name='Last Cringed Count', value=f'{last_cringed_at}')
         embed.add_field(name='Based to Cringe Ratio', value=f'``{decimal}``')
         embed.set_thumbnail(url='attachment://thumbnail.png')
         
