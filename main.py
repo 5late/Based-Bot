@@ -179,7 +179,7 @@ async def on_message(message):
                     data = {
                         "discord_id": member.id,
                         "discord_name": member.name,
-                        "avatar_url": await bot.fetch_user(member.id).avatar,
+                        "avatar_url": (await bot.fetch_user(member.id)).avatar,
                         "server_id": message.guild.id,
                         "created_at": getTicks(),
                             "data": {
@@ -276,7 +276,7 @@ async def on_message(message):
                     data = {
                         "discord_id": member.id,
                         "discord_name": member.name,
-                        "avatar_url": await bot.fetch_user(member.id).avatar,
+                        "avatar_url": (await bot.fetch_user(member.id)).avatar,
                         "server_id": message.guild.id,
                         "created_at": getTicks(),
                             "data": {
