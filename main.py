@@ -262,6 +262,11 @@ async def on_message(message):
                 f_bot.close()
                 await updateLeaderboardWithID('870487608105525298', 'based')
 
+                if message.guild.id == 853753017576587285:
+                    if json_object['data']['based']['based_count'] > 150:
+                        cringe_role = message.guild.get_role(898636526345416704)
+                        await member.add_roles(cringe_role)
+
             print(member.id)
         
         await message.add_reaction('👍')
@@ -345,6 +350,11 @@ async def on_message(message):
                 f.close()
 
                 await updateLeaderboardWithID(member.id, 'cringe')
+                
+                if message.guild.id == 853753017576587285:
+                    if json_object['data']['cringe']['cringe_count'] > 150:
+                        cringe_role = message.guild.get_role(898636807250538526)
+                        await member.add_roles(cringe_role)
 
             print(member.id)
         
