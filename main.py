@@ -242,12 +242,16 @@ async def on_message(message):
                     json_object['badges']['100_based_count'] = True
                 elif json_object['data']['based']['based_count'] >= 200:
                     json_object['badges']['200_based_count'] = True
+                
+                if message.guild.id == 814335750077153320 and json_object['data']['based']['based_count'] > 150:
+                    cringe_role = message.guild.get_role(898999240192294963)
+                    await member.add_roles(cringe_role)
 
                 f = open(f'./data/{member.id}.json', 'w')
                 json.dump(json_object, f, indent=4)
                 f.close()
                 
-                await updateLeaderboardWithID(member.id, 'based')
+                #await updateLeaderboardWithID(member.id, 'based')
 
                 f_bot = open('./data/870487608105525298.json', 'r')
                 json_object = json.load(f_bot)
@@ -260,11 +264,7 @@ async def on_message(message):
                 f_bot = open(f'./data/870487608105525298.json', 'w')
                 json.dump(json_object, f_bot, indent=4)
                 f_bot.close()
-                await updateLeaderboardWithID('870487608105525298', 'based')
-
-                if message.guild.id == 853753017576587285 and json_object['data']['based']['based_count'] > 150:
-                    cringe_role = message.guild.get_role(898636526345416704)
-                    await member.add_roles(cringe_role)
+                #await updateLeaderboardWithID('870487608105525298', 'based')
 
             print(member.id)
         
