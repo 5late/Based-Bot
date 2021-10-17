@@ -262,8 +262,7 @@ async def on_message(message):
                 f_bot.close()
                 await updateLeaderboardWithID('870487608105525298', 'based')
 
-                if message.guild.id == 853753017576587285:
-                    if json_object['data']['based']['based_count'] > 150:
+                if message.guild.id == 853753017576587285 and json_object['data']['based']['based_count'] > 150:
                         cringe_role = message.guild.get_role(898636526345416704)
                         await member.add_roles(cringe_role)
 
