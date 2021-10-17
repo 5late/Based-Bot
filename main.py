@@ -243,8 +243,8 @@ async def on_message(message):
                 elif json_object['data']['based']['based_count'] >= 200:
                     json_object['badges']['200_based_count'] = True
                 
-                if message.guild.id == 814335750077153320 and json_object['data']['based']['based_count'] > 150:
-                    cringe_role = message.guild.get_role(898999240192294963)
+                if message.guild.id == 853753017576587285 and json_object['data']['based']['based_count'] > 150:
+                    cringe_role = message.guild.get_role(899346066196017193)
                     await member.add_roles(cringe_role)
 
                 f = open(f'./data/{member.id}.json', 'w')
