@@ -597,7 +597,10 @@
                 var discord_id_string = data[i].discord_id_string
                 if (discord_id_string == "870487608105525298"){ 
                     return
-                }
+                } 
+		if (discord_id_string == "903422186369482844"){
+		    document.getElementById('username').style.backgroundColor = "#4F4100"
+		}
                 var json_ranking = data[i].ranking
                 var based_count = data[i].based_count
                 var name = data[i].discord_name
@@ -617,6 +620,9 @@
                 }
 
                 table_data.innerText = name
+		if (discord_id_string == "508363967454904322"){
+			table_data.style.color = "#4F4100"
+		}
                 table_row.appendChild(table_data)
                 based_count_data.innerText = based_count
                 table_row.appendChild(based_count_data)                

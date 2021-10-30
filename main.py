@@ -265,7 +265,7 @@ async def on_message(message):
                 json.dump(json_object, f, indent=4)
                 f.close()
                 
-                #await updateLeaderboardWithID(member.id, 'based')
+                await updateLeaderboardWithID(member.id, 'based')
 
                 f_bot = open('./data/870487608105525298.json', 'r')
                 json_object = json.load(f_bot)
