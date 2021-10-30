@@ -169,19 +169,6 @@ async def on_ready():
     botUptime = datetime.utcnow()
     print(f'Logged in as:\n{bot.user.name}#{bot.user.discriminator} at {botUptime}.\n----------')
 
-async def buttonCount(message, member, boc):
-    buttons = [
-        create_button(style=ButtonStyle.green, label='Yes!', custom_id='Yes'),
-        create_button(style=ButtonStyle.green, label='No!', custom_id='No')
-    ]
-    action_row = create_actionrow(*buttons)
-    origin = await message.channel.send(f"<@{message.author.id}>, would you like to grant **{member.name}** a {boc} point?",components=[action_row])
-    button_ctx = await wait_for_component(bot, components = action_row)
-    await button_ctx.edit_origin(content="Got it!")
-    if button_ctx.custom_id != "Yes":
-        await origin.delete()
-        return
-    await origin.delete()
 
 async def createUser(message, member):
     with open(f'./data/{member.id}.json', 'w') as f:
@@ -267,14 +254,86 @@ async def BasedTax(message):
     f_bot.close()
     #await updateLeaderboardWithID('870487608105525298', 'based')
 
+async def addBased(message, member):
+    f = open(f'./data/{member.id}.json', 'r')
+    json_object = json.load(f)
+    f.close()
+    
+    json_object['data']['based']['based_count'] += 1
+    json_object['data']['based']['based_title'] = generateBasedTitle(json_object['data']['based']['based_count'])
+    json_object['data']['based']['last_based_at'] = getTicks()
+    json_object['data']['based']['last_based_by'] = message.author.id
+    json_object['avatar_url'] = (await bot.fetch_user(member.id)).avatar
+    json_object['discord_name'] = str((await bot.fetch_user(member.id)).name).split('#')[0]
+
+    if json_object['data']['based']['based_count'] >= 50:
+        json_object['badges']['50_based_count'] = True
+    elif json_object['data']['based']['based_count'] >= 100:
+        json_object['badges']['100_based_count'] = True
+    elif json_object['data']['based']['based_count'] >= 200:
+        json_object['badges']['200_based_count'] = True
+    
+    if message.guild.id == 853753017576587285 and json_object['data']['based']['based_count'] > 150:
+        cringe_role = message.guild.get_role(899346066196017193)
+        await member.add_roles(cringe_role)
+
+    f = open(f'./data/{member.id}.json', 'w')
+    json.dump(json_object, f, indent=4)
+    f.close()
+        
+async def addCringe(message, member):
+    f = open(f'./data/{member.id}.json', 'r')
+    json_object = json.load(f)
+    f.close()
+
+    json_object['data']['cringe']['cringe_count'] += 1
+    json_object['data']['cringe']['cringe_title'] = generateCringeTitle(json_object['data']['cringe']['cringe_count'])
+    json_object['data']['cringe']['last_cringed_at'] = getTicks()
+    json_object['data']['cringe']['last_cringed_by'] = message.author.id
+    json_object['avatar_url'] = (await bot.fetch_user(member.id)).avatar
+    json_object['discord_name'] = str((await bot.fetch_user(member.id)).name).split('#')[0]
+
+    if json_object['data']['cringe']['cringe_count'] >= 50:
+        json_object['badges']['50_cringe_count'] = True
+    elif json_object['data']['cringe']['cringe_count'] >= 100:
+        json_object['badges']['100_cringe_count'] = True
+    elif json_object['data']['cringe']['cringe_count'] >= 200:
+        json_object['badges']['200_cringe_count'] = True
+
+    f = open(f'./data/{member.id}.json', 'w')
+    json.dump(json_object, f, indent=4)
+    f.close()
+
+    #await updateLeaderboardWithID(member.id, 'cringe')
+    
+    if message.guild.id == 853753017576587285:
+        if json_object['data']['cringe']['cringe_count'] > 150:
+            cringe_role = message.guild.get_role(898636807250538526)
+            await member.add_roles(cringe_role)
+
+async def buttonCount(message, member, boc):
+    buttons = [
+        create_button(style=ButtonStyle.green, label='Yes!', custom_id='Yes'),
+        create_button(style=ButtonStyle.green, label='No!', custom_id='No')
+    ]
+    action_row = create_actionrow(*buttons)
+    origin = await message.channel.send(f"<@{message.author.id}>, would you like to grant **{member.name}** a {boc} point?",components=[action_row])
+    button_ctx = await wait_for_component(bot, components = action_row)
+    await button_ctx.edit_origin(content="Got it!")
+    if button_ctx.custom_id != "Yes":
+        await origin.delete()
+        return
+    await origin.delete()
+    if boc == "based":
+        await addBased(message, member)
+    elif boc == "cringe":
+        await addCringe(message, member)
+
 @bot.event
 async def on_message(message):
     if message.author.id == bot.user.id:
         return
 
-    if "based" in message.content.lower() and message.mentions:
-        for member in message.mentions:
-            buttonCount(message, member, 'based')
     if message.content.split()[0].lower() == 'based' and message.mentions:
         # Based stuff goes here
         
@@ -287,32 +346,6 @@ async def on_message(message):
             elif checkFileExists(f'./data/{member.id}.json'):
                 if await AntiSpamBased():
                     return
-                f = open(f'./data/{member.id}.json', 'r')
-                json_object = json.load(f)
-                f.close()
-                
-                json_object['data']['based']['based_count'] += 1
-                json_object['data']['based']['based_title'] = generateBasedTitle(json_object['data']['based']['based_count'])
-                json_object['data']['based']['last_based_at'] = getTicks()
-                json_object['data']['based']['last_based_by'] = message.author.id
-                json_object['avatar_url'] = (await bot.fetch_user(member.id)).avatar
-                json_object['discord_name'] = str((await bot.fetch_user(member.id)).name).split('#')[0]
-
-                if json_object['data']['based']['based_count'] >= 50:
-                    json_object['badges']['50_based_count'] = True
-                elif json_object['data']['based']['based_count'] >= 100:
-                    json_object['badges']['100_based_count'] = True
-                elif json_object['data']['based']['based_count'] >= 200:
-                    json_object['badges']['200_based_count'] = True
-                
-                if message.guild.id == 853753017576587285 and json_object['data']['based']['based_count'] > 150:
-                    cringe_role = message.guild.get_role(899346066196017193)
-                    await member.add_roles(cringe_role)
-
-                f = open(f'./data/{member.id}.json', 'w')
-                json.dump(json_object, f, indent=4)
-                f.close()
-                
                 #await updateLeaderboardWithID(member.id, 'based')
 
                 await BasedTax()
@@ -333,40 +366,20 @@ async def on_message(message):
             elif checkFileExists(f'./data/{member.id}.json'):
                 if await AntiSpamCringed():
                     return
-
-                f = open(f'./data/{member.id}.json', 'r')
-                json_object = json.load(f)
-                f.close()
-
-                json_object['data']['cringe']['cringe_count'] += 1
-                json_object['data']['cringe']['cringe_title'] = generateCringeTitle(json_object['data']['cringe']['cringe_count'])
-                json_object['data']['cringe']['last_cringed_at'] = getTicks()
-                json_object['data']['cringe']['last_cringed_by'] = message.author.id
-                json_object['avatar_url'] = (await bot.fetch_user(member.id)).avatar
-                json_object['discord_name'] = str((await bot.fetch_user(member.id)).name).split('#')[0]
-
-                if json_object['data']['cringe']['cringe_count'] >= 50:
-                    json_object['badges']['50_cringe_count'] = True
-                elif json_object['data']['cringe']['cringe_count'] >= 100:
-                    json_object['badges']['100_cringe_count'] = True
-                elif json_object['data']['cringe']['cringe_count'] >= 200:
-                    json_object['badges']['200_cringe_count'] = True
-
-                f = open(f'./data/{member.id}.json', 'w')
-                json.dump(json_object, f, indent=4)
-                f.close()
-
-                #await updateLeaderboardWithID(member.id, 'cringe')
+                await addCringe(message, member)
                 
-                if message.guild.id == 853753017576587285:
-                    if json_object['data']['cringe']['cringe_count'] > 150:
-                        cringe_role = message.guild.get_role(898636807250538526)
-                        await member.add_roles(cringe_role)
 
             print(member.id)
         
         await message.add_reaction('👍')
 
+    elif "based" in message.content.lower() and message.mentions:
+        for member in message.mentions:
+            buttonCount(message, member, 'based')
+    
+    elif "cringe" in message.content.lower() and message.mentions:
+        for member in message.mentions:
+            buttonCount(message, member, 'cringe')
     await bot.process_commands(message)
 
 
