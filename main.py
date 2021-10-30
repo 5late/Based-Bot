@@ -169,67 +169,78 @@ async def on_ready():
     botUptime = datetime.utcnow()
     print(f'Logged in as:\n{bot.user.name}#{bot.user.discriminator} at {botUptime}.\n----------')
 
+async def buttonCount(message, member, boc):
+    buttons = [
+        create_button(style=ButtonStyle.green, label='Yes!', custom_id='Yes'),
+        create_button(style=ButtonStyle.green, label='No!', custom_id='No')
+    ]
+    action_row = create_actionrow(*buttons)
+    origin = await message.channel.send(f"<@{message.author.id}>, would you like to grant **{member.name}** a {boc} point?",components=[action_row])
+    button_ctx = await wait_for_component(bot, components = action_row)
+    await button_ctx.edit_origin(content="Got it!")
+    if button_ctx.custom_id != "Yes":
+        await origin.delete()
+        return
+    await origin.delete()
+
+async def createUser(message, member):
+    with open(f'./data/{member.id}.json', 'w') as f:
+        data = {
+            "discord_id": member.id,
+            "discord_name": member.name,
+            "avatar_url": (await bot.fetch_user(member.id)).avatar,
+            "server_id": message.guild.id,
+            "created_at": getTicks(),
+                "data": {
+                    "based": {
+                        "based_count": 0,
+                        "based_title": "newb",
+                        "last_based_at": getTicks(),
+                        "last_based_by": message.author.id
+                    },
+                    "cringe": {
+                        "cringe_count": 0,
+                        "cringe_title": "newb",
+                        "last_cringed_at": getTicks(),
+                        "last_cringed_by": message.author.id
+                    }
+                },
+                "settings": {
+                    "public_profile": True,
+                    "show_badges": True
+                },
+                "badges": {
+                    "alpha_tester": False,
+                    "early_adopter": True,
+                    "developer": False,
+                    "owner": False,
+                    "donator": False,
+                    "200_based_count": False,
+                    "200_cringe_count": False,
+                    "100_based_count" : False,
+                    "100_cringe_count": False,
+                    "50_based_count": False,
+                    "50_cringe_count": False
+                }
+        }
+        json.dump(data, f, indent=4)
 
 @bot.event
 async def on_message(message):
     if message.author.id == bot.user.id:
         return
+
+    if "based" in message.content.lower() and message.mentions:
+        for member in message.mentions:
+            buttonCount(message, member, 'based')
     if message.content.split()[0].lower() == 'based' and message.mentions:
         # Based stuff goes here
         
         for member in message.mentions:
-            buttons = [
-                create_button(style=ButtonStyle.green, label='Yes!', custom_id='Yes'),
-                create_button(style=ButtonStyle.green, label='No!', custom_id='No')
-            ]
-            action_row = create_actionrow(*buttons)
-            await message.channel.send("Test",components=[action_row])
-            button_ctx = await wait_for_component(bot, components = action_row)
-            await button_ctx.edit_origin(content="Got it!")
-            print(button_ctx.custom_id)
             updateServerCount(message.guild.id)
             if not checkFileExists(f'./data/{member.id}.json'):
-                with open(f'./data/{member.id}.json', 'w') as f:
-                    data = {
-                        "discord_id": member.id,
-                        "discord_name": member.name,
-                        "avatar_url": (await bot.fetch_user(member.id)).avatar,
-                        "server_id": message.guild.id,
-                        "created_at": getTicks(),
-                            "data": {
-                                "based": {
-                                    "based_count": 1,
-                                    "based_title": "newb",
-                                    "last_based_at": getTicks(),
-                                    "last_based_by": message.author.id
-                                },
-                                "cringe": {
-                                    "cringe_count": 0,
-                                    "cringe_title": "newb",
-                                    "last_cringed_at": getTicks(),
-                                    "last_cringed_by": message.author.id
-                                }
-                            },
-                            "settings": {
-                                "public_profile": True,
-                                "show_badges": True
-                            },
-                            "badges": {
-                                "alpha_tester": False,
-                                "early_adopter": True,
-                                "developer": False,
-                                "owner": False,
-                                "donator": False,
-                                "200_based_count": False,
-                                "200_cringe_count": False,
-                                "100_based_count" : False,
-                                "100_cringe_count": False,
-                                "50_based_count": False,
-                                "50_cringe_count": False
-                            }
-                    }
-                    json.dump(data, f, indent=4)
-                await updateLeaderboardWithID(member.id, 'based')
+                createUser(message, member)
+                #await updateLeaderboardWithID(member.id, 'based')
             
             elif checkFileExists(f'./data/{member.id}.json'):
                 if member.id == message.author.id:
@@ -265,7 +276,7 @@ async def on_message(message):
                 json.dump(json_object, f, indent=4)
                 f.close()
                 
-                await updateLeaderboardWithID(member.id, 'based')
+                #await updateLeaderboardWithID(member.id, 'based')
 
                 f_bot = open('./data/870487608105525298.json', 'r')
                 json_object = json.load(f_bot)
@@ -330,7 +341,7 @@ async def on_message(message):
                             }
                     }
                     json.dump(data, f, indent=4)
-                await updateLeaderboardWithID(member.id, 'cringe')
+                #await updateLeaderboardWithID(member.id, 'cringe')
             
             elif checkFileExists(f'./data/{member.id}.json'):
                 if member.id == message.author.id:
@@ -362,7 +373,7 @@ async def on_message(message):
                 json.dump(json_object, f, indent=4)
                 f.close()
 
-                await updateLeaderboardWithID(member.id, 'cringe')
+                #await updateLeaderboardWithID(member.id, 'cringe')
                 
                 if message.guild.id == 853753017576587285:
                     if json_object['data']['cringe']['cringe_count'] > 150:
