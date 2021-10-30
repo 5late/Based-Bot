@@ -198,7 +198,7 @@ async def createUser(message, member):
                 },
                 "badges": {
                     "alpha_tester": False,
-                    "early_adopter": True,
+                    "early_adopter": False,
                     "developer": False,
                     "owner": False,
                     "donator": False,
@@ -374,12 +374,14 @@ async def on_message(message):
             if await AntiSpamBased(message, member):
                 return
             await buttonCount(message, member, 'based')
+            await message.add_reaction('👍')
     
     elif message.content.split()[0].lower() != 'cringe' and "cringe" in message.content.lower() and message.mentions:
         for member in message.mentions:
             if await AntiSpamCringed(message, member):
                 return
             await buttonCount(message, member, 'cringe')
+            await message.add_reaction('👍')
 
     await bot.process_commands(message)
 
