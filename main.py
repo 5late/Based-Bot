@@ -371,15 +371,15 @@ async def on_message(message):
 
     if message.content.split()[0].lower() != 'based' and "based" in message.content.lower() and message.mentions:
         for member in message.mentions:
-            if AntiSpamBased(message, member):
+            if await AntiSpamBased(message, member):
                 return
-            buttonCount(message, member, 'based')
+            await buttonCount(message, member, 'based')
     
     elif message.content.split()[0].lower() != 'cringe' and "cringe" in message.content.lower() and message.mentions:
         for member in message.mentions:
-            if AntiSpamCringed(message, member):
+            if await AntiSpamCringed(message, member):
                 return
-            buttonCount(message, member, 'cringe')
+            await buttonCount(message, member, 'cringe')
 
     await bot.process_commands(message)
 
