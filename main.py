@@ -225,6 +225,48 @@ async def createUser(message, member):
         }
         json.dump(data, f, indent=4)
 
+async def AntiSpamBased(message, member):
+    if member.id == message.author.id:
+        return True
+    f = open(f'./data/{member.id}.json', 'r')
+    json_object = json.load(f)
+    f.close()
+
+    if json_object['data']['based']['last_based_at'] + 3 >= getTicks():
+        print(json_object['data']['based']['last_based_at'] + 3, getTicks())
+        return True
+    elif json_object['data']['based']['last_based_at'] + 100 >= getTicks() and json_object['data']['based']['last_based_by'] == message.author.id:
+        return True
+    return False
+
+async def AntiSpamCringed(message, member):
+    if member.id == message.author.id:
+        return True
+    f = open(f'./data/{member.id}.json', 'r')
+    json_object = json.load(f)
+    f.close()
+
+    if json_object['data']['cringe']['last_cringed_at'] + 3 >= getTicks():
+        print(json_object['data']['cringe']['last_cringed_at'] + 3, getTicks())
+        return True
+    elif json_object['data']['cringe']['last_cringed_at'] + 100 >= getTicks() and json_object['data']['cringe']['last_cringed_by'] == message.author.id:
+        return True
+    return False
+
+async def BasedTax(message):
+    f_bot = open('./data/870487608105525298.json', 'r')
+    json_object = json.load(f_bot)
+    f_bot.close()
+
+    json_object['data']['based']['based_count'] += 1
+    json_object['data']['based']['based_title'] = generateBasedTitle(json_object['data']['based']['based_count'])
+    json_object['data']['based']['last_based_by'] = message.author.id
+
+    f_bot = open(f'./data/870487608105525298.json', 'w')
+    json.dump(json_object, f_bot, indent=4)
+    f_bot.close()
+    #await updateLeaderboardWithID('870487608105525298', 'based')
+
 @bot.event
 async def on_message(message):
     if message.author.id == bot.user.id:
@@ -239,21 +281,16 @@ async def on_message(message):
         for member in message.mentions:
             updateServerCount(message.guild.id)
             if not checkFileExists(f'./data/{member.id}.json'):
-                createUser(message, member)
+                await createUser(message, member)
                 #await updateLeaderboardWithID(member.id, 'based')
             
             elif checkFileExists(f'./data/{member.id}.json'):
-                if member.id == message.author.id:
+                if await AntiSpamBased():
                     return
                 f = open(f'./data/{member.id}.json', 'r')
                 json_object = json.load(f)
                 f.close()
-
-                if json_object['data']['based']['last_based_at'] + 3 >= getTicks():
-                    print(json_object['data']['based']['last_based_at'] + 3, getTicks())
-                    return
-                elif json_object['data']['based']['last_based_at'] + 100 >= getTicks() and json_object['data']['based']['last_based_by'] == message.author.id:
-                    return
+                
                 json_object['data']['based']['based_count'] += 1
                 json_object['data']['based']['based_title'] = generateBasedTitle(json_object['data']['based']['based_count'])
                 json_object['data']['based']['last_based_at'] = getTicks()
@@ -278,18 +315,7 @@ async def on_message(message):
                 
                 #await updateLeaderboardWithID(member.id, 'based')
 
-                f_bot = open('./data/870487608105525298.json', 'r')
-                json_object = json.load(f_bot)
-                f_bot.close()
-
-                json_object['data']['based']['based_count'] += 1
-                json_object['data']['based']['based_title'] = generateBasedTitle(json_object['data']['based']['based_count'])
-                json_object['data']['based']['last_based_by'] = message.author.id
-
-                f_bot = open(f'./data/870487608105525298.json', 'w')
-                json.dump(json_object, f_bot, indent=4)
-                f_bot.close()
-                #await updateLeaderboardWithID('870487608105525298', 'based')
+                await BasedTax()
 
             print(member.id)
         
@@ -301,60 +327,17 @@ async def on_message(message):
         for member in message.mentions:
             updateServerCount(message.guild.id)
             if not checkFileExists(f'./data/{member.id}.json'):
-                with open(f'./data/{member.id}.json', 'w') as f:
-                    data = {
-                        "discord_id": member.id,
-                        "discord_name": member.name,
-                        "avatar_url": (await bot.fetch_user(member.id)).avatar,
-                        "server_id": message.guild.id,
-                        "created_at": getTicks(),
-                            "data": {
-                                "based": {
-                                    "based_count": 0,
-                                    "based_title": "newb",
-                                    "last_based_at": getTicks(),
-                                    "last_based_by": message.author.id
-                                },
-                                "cringe": {
-                                    "cringe_count": 1,
-                                    "cringe_title": "newb",
-                                    "last_cringed_at": getTicks(),
-                                    "last_cringed_by": message.author.id
-                                }
-                            },
-                            "settings": {
-                                "public_profile": True,
-                                "show_badges": True
-                            },
-                            "badges": {
-                                "alpha_tester": False,
-                                "early_adopter": True,
-                                "developer": False,
-                                "owner": False,
-                                "donator": False,
-                                "200_based_count": False,
-                                "200_cringe_count": False,
-                                "100_based_count" : False,
-                                "100_cringe_count": False,
-                                "50_based_count": False,
-                                "50_cringe_count": False
-                            }
-                    }
-                    json.dump(data, f, indent=4)
+                await createUser()
                 #await updateLeaderboardWithID(member.id, 'cringe')
             
             elif checkFileExists(f'./data/{member.id}.json'):
-                if member.id == message.author.id:
+                if await AntiSpamCringed():
                     return
+
                 f = open(f'./data/{member.id}.json', 'r')
                 json_object = json.load(f)
                 f.close()
 
-                if json_object['data']['cringe']['last_cringed_at'] + 3 >= getTicks():
-                    print(json_object['data']['cringe']['last_cringed_at'] + 3, getTicks())
-                    return
-                elif json_object['data']['cringe']['last_cringed_at'] + 120 >= getTicks() and json_object['data']['cringe']['last_cringed_by'] == message.author.id:
-                    return
                 json_object['data']['cringe']['cringe_count'] += 1
                 json_object['data']['cringe']['cringe_title'] = generateCringeTitle(json_object['data']['cringe']['cringe_count'])
                 json_object['data']['cringe']['last_cringed_at'] = getTicks()
