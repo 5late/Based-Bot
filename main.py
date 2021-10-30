@@ -304,7 +304,6 @@ async def addCringe(message, member):
     json.dump(json_object, f, indent=4)
     f.close()
 
-    #await updateLeaderboardWithID(member.id, 'cringe')
     
     if message.guild.id == 853753017576587285:
         if json_object['data']['cringe']['cringe_count'] > 150:
@@ -339,6 +338,7 @@ async def on_message(message):
         
         for member in message.mentions:
             updateServerCount(message.guild.id)
+            
             if not checkFileExists(f'./data/{member.id}.json'):
                 await createUser(message, member)
                 #await updateLeaderboardWithID(member.id, 'based')
@@ -347,11 +347,8 @@ async def on_message(message):
                 if await AntiSpamBased():
                     return
                 #await updateLeaderboardWithID(member.id, 'based')
-
                 await BasedTax()
 
-            print(member.id)
-        
         await message.add_reaction('👍')
 
     elif message.content.split()[0].lower() == 'cringe' and message.mentions:
@@ -359,27 +356,31 @@ async def on_message(message):
 
         for member in message.mentions:
             updateServerCount(message.guild.id)
+            
             if not checkFileExists(f'./data/{member.id}.json'):
                 await createUser()
-                #await updateLeaderboardWithID(member.id, 'cringe')
             
             elif checkFileExists(f'./data/{member.id}.json'):
                 if await AntiSpamCringed():
                     return
-                await addCringe(message, member)
-                
 
-            print(member.id)
+                await addCringe(message, member)
+                #await updateLeaderboardWithID(member.id, 'cringe')
         
         await message.add_reaction('👍')
 
     elif "based" in message.content.lower() and message.mentions:
         for member in message.mentions:
+            if AntiSpamBased(message, member):
+                return
             buttonCount(message, member, 'based')
     
     elif "cringe" in message.content.lower() and message.mentions:
         for member in message.mentions:
+            if AntiSpamCringed(message, member):
+                return
             buttonCount(message, member, 'cringe')
+
     await bot.process_commands(message)
 
 
