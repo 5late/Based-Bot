@@ -371,6 +371,10 @@ async def on_message(message):
 
     if message.content.split()[0].lower() != 'based' and "based" in message.content.lower() and message.mentions:
         for member in message.mentions:
+            if not checkFileExists(f'./data/{member.id}.json'):
+                await createUser(message, member)
+                await buttonCount(message, member, 'based')
+                await message.add_reaction('👍')
             if await AntiSpamBased(message, member):
                 return
             await buttonCount(message, member, 'based')
@@ -378,6 +382,10 @@ async def on_message(message):
     
     elif message.content.split()[0].lower() != 'cringe' and "cringe" in message.content.lower() and message.mentions:
         for member in message.mentions:
+            if not checkFileExists(f'./data/{member.id}.json'):
+                await createUser(message, member)
+                await buttonCount(message, member, 'cringe')
+                await message.add_reaction('👍')
             if await AntiSpamCringed(message, member):
                 return
             await buttonCount(message, member, 'cringe')
