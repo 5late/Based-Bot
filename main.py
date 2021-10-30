@@ -338,16 +338,16 @@ async def on_message(message):
         
         for member in message.mentions:
             updateServerCount(message.guild.id)
-            
+
             if not checkFileExists(f'./data/{member.id}.json'):
                 await createUser(message, member)
                 #await updateLeaderboardWithID(member.id, 'based')
             
             elif checkFileExists(f'./data/{member.id}.json'):
-                if await AntiSpamBased():
+                if await AntiSpamBased(message, member):
                     return
                 #await updateLeaderboardWithID(member.id, 'based')
-                await BasedTax()
+                await BasedTax(message)
 
         await message.add_reaction('👍')
 
@@ -358,10 +358,10 @@ async def on_message(message):
             updateServerCount(message.guild.id)
             
             if not checkFileExists(f'./data/{member.id}.json'):
-                await createUser()
+                await createUser(message, member)
             
             elif checkFileExists(f'./data/{member.id}.json'):
-                if await AntiSpamCringed():
+                if await AntiSpamCringed(message, member):
                     return
 
                 await addCringe(message, member)
@@ -369,13 +369,13 @@ async def on_message(message):
         
         await message.add_reaction('👍')
 
-    elif "based" in message.content.lower() and message.mentions:
+    if message.content.split()[0].lower() != 'based' and "based" in message.content.lower() and message.mentions:
         for member in message.mentions:
             if AntiSpamBased(message, member):
                 return
             buttonCount(message, member, 'based')
     
-    elif "cringe" in message.content.lower() and message.mentions:
+    elif message.content.split()[0].lower() != 'cringe' and "cringe" in message.content.lower() and message.mentions:
         for member in message.mentions:
             if AntiSpamCringed(message, member):
                 return
