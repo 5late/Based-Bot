@@ -1,6 +1,9 @@
 import discord
 from datetime import datetime, timezone
 from discord.ext.commands.core import check
+from discord_slash.model import ButtonStyle
+from discord_slash.utils.manage_components import create_button, create_actionrow, wait_for_component
+from discord_slash import SlashCommand
 from dotenv import load_dotenv
 import os
 import json
@@ -23,6 +26,8 @@ bot = commands.Bot(
     command_prefix='./',
     description='Based Bot, the most based bot on Discord.',
     intents=intents)
+
+slash = SlashCommand(bot)
 
 def readFile(fileName):
     fileObj = open(fileName, "r")  # opens the file in read mode
@@ -173,6 +178,15 @@ async def on_message(message):
         # Based stuff goes here
         
         for member in message.mentions:
+            buttons = [
+                create_button(style=ButtonStyle.green, label='Yes!', custom_id='Yes'),
+                create_button(style=ButtonStyle.green, label='No!', custom_id='No')
+            ]
+            action_row = create_actionrow(*buttons)
+            await message.channel.send("Test",components=[action_row])
+            button_ctx = await wait_for_component(bot, components = action_row)
+            await button_ctx.edit_origin(content="Got it!")
+            print(button_ctx.custom_id)
             updateServerCount(message.guild.id)
             if not checkFileExists(f'./data/{member.id}.json'):
                 with open(f'./data/{member.id}.json', 'w') as f:
