@@ -329,7 +329,7 @@ async def buttonCount(message, member, boc):
             return message.author.id == author.author_id
     buttons = [
         create_button(style=ButtonStyle.green, label='Yes!', custom_id='Yes'),
-        create_button(style=ButtonStyle.green, label='No!', custom_id='No')
+        create_button(style=ButtonStyle.red, label='No!', custom_id='No')
     ]
     action_row = create_actionrow(*buttons)
     origin = await message.channel.send(f"<@{message.author.id}>, would you like to grant **{member.name}** a {boc} point?",components=[action_row])
