@@ -1,7 +1,7 @@
 import discord
 from datetime import datetime, timezone
 from discord.ext.commands.core import check
-from discord_slash.context import ComponentContext
+from discord_slash.context import ComponentContext, InteractionContext
 from discord_slash.model import ButtonStyle
 from discord_slash.utils.manage_components import create_button, create_actionrow, wait_for_component
 from discord_slash import SlashCommand
@@ -325,15 +325,15 @@ async def addCringe(message, member):
             await member.add_roles(cringe_role)
 
 async def buttonCount(message, member, boc):
-    def check(author: ComponentContext, message):
-            return message.author == author.author
+    def check(author: ComponentContext):
+            return message.author.id == author.author_id
     buttons = [
         create_button(style=ButtonStyle.green, label='Yes!', custom_id='Yes'),
         create_button(style=ButtonStyle.green, label='No!', custom_id='No')
     ]
     action_row = create_actionrow(*buttons)
     origin = await message.channel.send(f"<@{message.author.id}>, would you like to grant **{member.name}** a {boc} point?",components=[action_row])
-    button_ctx: ComponentContext = await wait_for_component(bot, components = action_row, check=check(ComponentContext, message))
+    button_ctx: ComponentContext = await wait_for_component(bot, components = action_row, check=check)
     await button_ctx.edit_origin(content="Got it!")
     if button_ctx.custom_id != "Yes":
         await origin.delete()
