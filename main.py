@@ -324,13 +324,15 @@ async def addCringe(message, member):
             await member.add_roles(cringe_role)
 
 async def buttonCount(message, member, boc):
+    def check(author, message):
+            return message.author == author
     buttons = [
         create_button(style=ButtonStyle.green, label='Yes!', custom_id='Yes'),
         create_button(style=ButtonStyle.green, label='No!', custom_id='No')
     ]
     action_row = create_actionrow(*buttons)
     origin = await message.channel.send(f"<@{message.author.id}>, would you like to grant **{member.name}** a {boc} point?",components=[action_row])
-    button_ctx = await wait_for_component(bot, components = action_row)
+    button_ctx = await wait_for_component(bot, components = action_row, check=check(message.author, message))
     await button_ctx.edit_origin(content="Got it!")
     if button_ctx.custom_id != "Yes":
         await origin.delete()
