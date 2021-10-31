@@ -1,6 +1,7 @@
 .env
 data/
 data_backup/
+server_data/
 blacklisted/
 questionlog.txt
 mainpyoutput.txt
