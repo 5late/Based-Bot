@@ -240,6 +240,16 @@ async def AntiSpamCringed(message, member):
         return True
     return False
 
+async def exceptions(message):
+    rejected_words = ['not', 'arent', 'aren\'t']
+    words = message.content.lower().split()
+    if 'based' in words:
+        if words[words.index('based')-1].lower() in rejected_words:
+            return True
+        elif message.content == './mybasedcount' or message.content[0] == './basedcount':
+            return True
+        return False
+
 async def BasedTax(message):
     f_bot = open('./data/870487608105525298.json', 'r')
     json_object = json.load(f_bot)
@@ -277,6 +287,8 @@ async def addBased(message, member):
         cringe_role = message.guild.get_role(899346066196017193)
         await member.add_roles(cringe_role)
 
+    await message.add_reaction('👍')
+
     f = open(f'./data/{member.id}.json', 'w')
     json.dump(json_object, f, indent=4)
     f.close()
@@ -304,6 +316,7 @@ async def addCringe(message, member):
     json.dump(json_object, f, indent=4)
     f.close()
 
+    await message.add_reaction('👍')
     
     if message.guild.id == 853753017576587285:
         if json_object['data']['cringe']['cringe_count'] > 150:
@@ -375,10 +388,9 @@ async def on_message(message):
                 await createUser(message, member)
                 await buttonCount(message, member, 'based')
                 await message.add_reaction('👍')
-            if await AntiSpamBased(message, member):
+            if await AntiSpamBased(message, member) or await exceptions(message):
                 return
             await buttonCount(message, member, 'based')
-            await message.add_reaction('👍')
     
     elif message.content.split()[0].lower() != 'cringe' and "cringe" in message.content.lower() and message.mentions:
         for member in message.mentions:
@@ -386,10 +398,9 @@ async def on_message(message):
                 await createUser(message, member)
                 await buttonCount(message, member, 'cringe')
                 await message.add_reaction('👍')
-            if await AntiSpamCringed(message, member):
+            if await AntiSpamCringed(message, member) or await exceptions(message):
                 return
             await buttonCount(message, member, 'cringe')
-            await message.add_reaction('👍')
 
     await bot.process_commands(message)
 
