@@ -411,7 +411,6 @@
         position: absolute;
         top: 1.5em;
         right: 2.5em;
-        border-radius: 50%;
         width: 6em;
     }
 </style>
@@ -533,16 +532,18 @@
                             avatar.src = `https://cdn.discordapp.com/avatars/${discord_id_string}/${avatar_url}`
                             creation.innerText = new Date((Number(spawn) * 1000)).toLocaleString('en-US', {hour12: false, year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
                             
-                            var remove_question = (new_json.sapply).split('?')[1]
-                            console.log(remove_question)
-                            var remove_and = (remove_question).split('&')
-                            console.log(remove_and)
-                            var right = parseFloat((remove_and[0]).split('=')[1])
-                            var auth = parseFloat((remove_and[1]).split('=')[1])
-                            var prog = parseFloat((remove_and[2]).split('=')[1])
-                            console.log(right, auth, prog)
+                            if (new_json.sapply != "https://sapplyvalues.github.io/results.html"){
+                                var remove_question = (new_json.sapply).split('?')[1]
+                                console.log(remove_question)
+                                var remove_and = (remove_question).split('&')
+                                console.log(remove_and)
+                                var right = parseFloat((remove_and[0]).split('=')[1])
+                                var auth = parseFloat((remove_and[1]).split('=')[1])
+                                var prog = parseFloat((remove_and[2]).split('=')[1])
+                                console.log(right, auth, prog)
 
-                            getSapply(right, auth, prog)
+                                getSapply(right, auth, prog)
+                            }
 
                             let based_div = document.getElementById('basedDiv')
                             let based_count_p = document.getElementById('basedCount')
