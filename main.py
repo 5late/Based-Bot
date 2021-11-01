@@ -798,6 +798,13 @@ async def update(ctx):
             }
             write_json(discord_avatar, f'./data/{file}')
 
+        elif not "sapply" in json_object:
+            file_count += 1
+            sapply_url = {
+                "sapply": "https://sapplyvalues.github.io/results.html"
+            }
+            write_json(sapply_url, f'./data/{file}')
+
     await ctx.send(f'Updated {file_count} files with new data.')
 
     
@@ -859,6 +866,23 @@ async def settings(ctx, arg='', value=''):
             await channel.send(f'<@{ctx.author.id}>!')
             return await channel.send('Thats not an accepted SETTING. Accepted SETTINGS are: ``public`` and ``badges``.')
 
+@bot.command()
+async def mysapply(ctx, url=''):
+    if not checkFileExists(f'./data/{ctx.author.id}.json'):
+        return await ctx.send('Nothing to show. What a boring person.')
+    elif checkFileExists(f'./data/{ctx.author.id}.json'):
+        channel = getBotChannel(ctx)
+        f = open(f'./data/{ctx.author.id}.json', 'r')
+        json_object = json.load(f)
+        f.close()
+        
+        json_object['sapply'] = url
+
+        f = open(f'./data/{ctx.author.id}.json', 'w')
+        json.dump(json_object, f, indent=4)
+        f.close()
+
+        await channel.send(f'Updated sapply data for **{ctx.author.name}**.')
 
 @bot.command()
 async def fed(ctx, person:discord.Member=None):
