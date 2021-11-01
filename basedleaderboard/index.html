@@ -643,6 +643,11 @@
                 var based_count_data = document.createElement('small')
                 var ranking = document.createElement('td')
 
+                var right, auth, prog = ((data[i].sapply).split('?')[1]).split('&')
+                localStorage.setItem('right', right)
+                localStorage.setItem('auth', auth)
+                localStorage.setItem('prog', prog)
+
                 if (name == ""){
                     fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json()).then(new_json => {
                         name = new_json['discord_name']
@@ -667,6 +672,7 @@
             })
             
         })
+        getSapply()
     }
 
     window.onload = function () {
@@ -678,9 +684,19 @@
                 previewimg.src = this.src
             })
         }
-        x_axis  = parseFloat(urlParams.get("right"))
-        y_axis  = parseFloat(urlParams.get("auth"))
-        z_axis  = parseFloat(urlParams.get("prog"))
+    }
+
+    previewbg.addEventListener('click', () => {
+        if (!isPreviewHidden) {
+            previewbg.style.display = 'none'
+            isPreviewHidden = true
+        }
+    })
+
+    function getSapply(){
+        x_axis  = parseFloat(localStorage.getItem("right"))
+        y_axis  = parseFloat(localStorage.getItem("auth"))
+        z_axis  = parseFloat(localStorage.getItem("prog"))
     
             var background = new Image();
             background.onload = function() {
@@ -721,13 +737,6 @@
             }
             background.src = "../imgs/compass.png";
     }
-
-    previewbg.addEventListener('click', () => {
-        if (!isPreviewHidden) {
-            previewbg.style.display = 'none'
-            isPreviewHidden = true
-        }
-    })
   
         
 </script>
