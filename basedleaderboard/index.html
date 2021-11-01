@@ -532,6 +532,17 @@
                             username.innerText = name
                             avatar.src = `https://cdn.discordapp.com/avatars/${discord_id_string}/${avatar_url}`
                             creation.innerText = new Date((Number(spawn) * 1000)).toLocaleString('en-US', {hour12: false, year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'})
+                            
+                            var remove_question = (new_json.sapply).split('?')[1]
+                            console.log(remove_question)
+                            var remove_and = (remove_question).split('&')
+                            console.log(remove_and)
+                            var right = parseFloat((remove_and[0]).split('=')[1])
+                            var auth = parseFloat((remove_and[1]).split('=')[1])
+                            var prog = parseFloat((remove_and[2]).split('=')[1])
+                            console.log(right, auth, prog)
+
+                            getSapply(right, auth, prog)
 
                             let based_div = document.getElementById('basedDiv')
                             let based_count_p = document.getElementById('basedCount')
@@ -643,10 +654,6 @@
                 var based_count_data = document.createElement('small')
                 var ranking = document.createElement('td')
 
-                var right, auth, prog = ((data[i].sapply).split('?')[1]).split('&')
-                localStorage.setItem('right', right)
-                localStorage.setItem('auth', auth)
-                localStorage.setItem('prog', prog)
 
                 if (name == ""){
                     fetch(`https://api.slatedev.xyz/api/basedbot/v1/user/${discord_id_string}`).then(response => response.json()).then(new_json => {
@@ -672,7 +679,6 @@
             })
             
         })
-        getSapply()
     }
 
     window.onload = function () {
@@ -693,10 +699,7 @@
         }
     })
 
-    function getSapply(){
-        x_axis  = parseFloat(localStorage.getItem("right"))
-        y_axis  = parseFloat(localStorage.getItem("auth"))
-        z_axis  = parseFloat(localStorage.getItem("prog"))
+    function getSapply(x_axis, y_axis, z_axis){
     
             var background = new Image();
             background.onload = function() {
