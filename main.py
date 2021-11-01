@@ -24,7 +24,7 @@ CRINGE = ['cringe', 'soy']
 LEADERBOARD_BASE_COUNT = 5
 
 bot = commands.Bot(
-    command_prefix='.//',
+    command_prefix='./',
     description='Based Bot, the most based bot on Discord.',
     intents=intents)
 
